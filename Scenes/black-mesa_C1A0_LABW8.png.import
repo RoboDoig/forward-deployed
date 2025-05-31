@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://cfvd33fxljyac"
+path.s3tc="res://.godot/imported/black-mesa_C1A0_LABW8.png-004bb333cbb99f938c61fcf244911240.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "eb24fbb96ee21be09f9e75d5f87c7f25"
+}
+
+[deps]
+
+source_file="res://Scenes/black-mesa_C1A0_LABW8.png"
+dest_files=["res://.godot/imported/black-mesa_C1A0_LABW8.png-004bb333cbb99f938c61fcf244911240.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0
