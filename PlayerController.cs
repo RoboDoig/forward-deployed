@@ -22,10 +22,15 @@ public partial class PlayerController : CharacterBody3D
     [Export] float speed = 10;
     [Export] float acceleration = 100;
 
-    //private WorldObject hoveredObject;
+    private WorldObject hoveredObject;
+
+    [Signal]
+    public delegate void WorldObjectClickedEventHandler(WorldObject worldObject);
 
     // Walk
     const float gravity = -9.8f * 3;
+
+    public bool LockControls = false;
 
     public override void _Ready()
     {
@@ -47,44 +52,50 @@ public partial class PlayerController : CharacterBody3D
         {
             if (inputEventMouseButton.ButtonIndex == MouseButton.Left)
             {
-                //GD.Print(hoveredObject);
+                if (hoveredObject != null)
+                {
+                    EmitSignal(SignalName.WorldObjectClicked, hoveredObject);
+                }
             }
         }
     }
 
     public override void _Process(double delta)
     {
-        //CheckMouseObjectHover();
+        CheckMouseObjectHover();
     }
 
-    //void CheckMouseObjectHover()
-    //{
-    //    var cameraRayLength = 1000f;
-    //    var cameraRayStart = mainCamera.ProjectRayOrigin(mousePosition);
-    //    var cameraRayEnd = cameraRayStart + mainCamera.ProjectRayNormal(mousePosition) * cameraRayLength;
-    //    var detected = GetWorld3D().
-    //        DirectSpaceState.
-    //        IntersectRay(new PhysicsRayQueryParameters3D { From = cameraRayStart, To = cameraRayEnd });
-    //    if (detected.ContainsKey("collider"))
-    //    {
-    //        var node = (Node3D)detected["collider"];
-    //        if (node is WorldObjectInteraction)
-    //        {
-    //            var objectInteraction = node as WorldObjectInteraction;
-    //            hoveredObject = objectInteraction.OwnerObject;
-    //        }
-    //        else
-    //        {
-    //            hoveredObject = null;
-    //        }
-    //    }
-    //}
+    void CheckMouseObjectHover()
+    {
+        var cameraRayLength = 1000f;
+        var cameraRayStart = mainCamera.ProjectRayOrigin(mousePosition);
+        var cameraRayEnd = cameraRayStart + mainCamera.ProjectRayNormal(mousePosition) * cameraRayLength;
+        var detected = GetWorld3D().
+            DirectSpaceState.
+            IntersectRay(new PhysicsRayQueryParameters3D { From = cameraRayStart, To = cameraRayEnd });
+        if (detected.ContainsKey("collider"))
+        {
+            var node = (Node3D)detected["collider"];
+            if (node is WorldObject)
+            {
+                var worldObject = node as WorldObject;
+                hoveredObject = worldObject;
+            }
+            else
+            {
+                hoveredObject = null;
+            }
+        }
+    }
 
     public override void _PhysicsProcess(double delta)
     {
-        Aim();
+        if (!LockControls)
+        {
+            Aim();
+            Velocity = Walk(delta) + Gravity(delta);
+        }
 
-        Velocity = Walk(delta) + Gravity(delta);
         MoveAndSlide();
     }
 

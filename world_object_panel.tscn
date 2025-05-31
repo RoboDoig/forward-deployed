@@ -1,0 +1,80 @@
+[gd_scene load_steps=6 format=3 uid="uid://dai25vw8pb6tu"]
+
+[ext_resource type="LabelSettings" uid="uid://d0ee7jd8sa4mt" path="res://label_settings.tres" id="1_ha6g8"]
+[ext_resource type="Script" uid="uid://dnx3qus3lwbnx" path="res://WorldObjectPanel.cs" id="1_sh87s"]
+[ext_resource type="FontFile" uid="uid://ci2y318j7yn78" path="res://Tektur-Regular.ttf" id="2_sh87s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wydpg"]
+bg_color = Color(0, 0, 0, 0.435294)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ob5oc"]
+font = ExtResource("2_sh87s")
+font_size = 25
+font_color = Color(0.823529, 0.631373, 0.211765, 1)
+
+[node name="WorldObjectPanel" type="Control" node_paths=PackedStringArray("CloseButton", "Title")]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sh87s")
+CloseButton = NodePath("Panel/MarginContainer/CloseButton")
+Title = NodePath("Panel/MarginContainer/VBoxContainer/Title")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wydpg")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "World Object"
+label_settings = ExtResource("1_ha6g8")
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Description of the object in question"
+label_settings = SubResource("LabelSettings_ob5oc")
+autowrap_mode = 2
+
+[node name="CloseButton" type="Button" parent="Panel/MarginContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.8, 0.615686, 0.211765, 1)
+theme_override_fonts/font = ExtResource("2_sh87s")
+theme_override_font_sizes/font_size = 25
+text = "Close"

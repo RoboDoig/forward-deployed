@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://d0ee7jd8sa4mt"]
+
+[ext_resource type="FontFile" uid="uid://ci2y318j7yn78" path="res://Tektur-Regular.ttf" id="1_8aso4"]
+
+[resource]
+font = ExtResource("1_8aso4")
+font_size = 30
+font_color = Color(0.823529, 0.631373, 0.211765, 1)
