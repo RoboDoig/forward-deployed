@@ -19,6 +19,16 @@ public partial class GeneralManager : Node3D
             UiManager.CreateWorldObjectPanel(worldObject);
         };
 
+        PlayerController.WorldObjectHovered += (WorldObject) =>
+        {
+            UiManager.SetCrosshairScale(new Vector2(1.5f, 1.5f));
+        };
+
+        PlayerController.NoWorldObjectHovered += (WorldObject) =>
+        {
+            UiManager.SetCrosshairScale(new Vector2(1, 1));
+        };
+
         UiManager.RequestUiControls += () =>
         {
             Input.MouseMode = Input.MouseModeEnum.Visible;

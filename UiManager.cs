@@ -11,14 +11,16 @@ public partial class UiManager : CanvasLayer
 
     private bool CanCreatePanels = true;
 
+    [Export]
+    private TextureRect Crosshair;
+
     public void CreateWorldObjectPanel(WorldObject worldObject)
     {
         if (CanCreatePanels)
         {
             CanCreatePanels = false;
-            var panel = (WorldObjectPanel)worldObject.InterfacePanel.Instantiate();
+            var panel = worldObject.CreateInterfacePanel(this);
             AddChild(panel);
-            panel.Title.Text = worldObject.ObjectName;
 
             EmitSignal(SignalName.RequestUiControls);
 
@@ -31,5 +33,10 @@ public partial class UiManager : CanvasLayer
                 CanCreatePanels = true;
             };
         }
+    }
+
+    public void SetCrosshairScale(Vector2 scaleVector)
+    {
+        Crosshair.Scale = scaleVector;
     }
 }

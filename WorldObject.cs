@@ -10,4 +10,12 @@ public partial class WorldObject : StaticBody3D
     public string Description = "Object description.";
 
     public readonly PackedScene InterfacePanel = ResourceLoader.Load<PackedScene>("res://world_object_panel.tscn");
+
+    public WorldObjectPanel CreateInterfacePanel(UiManager uiManager)
+    {
+        var panel = (WorldObjectPanel)InterfacePanel.Instantiate();
+        panel.Title.Text = ObjectName;
+
+        return panel;
+    }
 }

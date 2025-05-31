@@ -3019,8 +3019,9 @@ ObjectName = "Terminal"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00397348, 0.0316315, -0.0135498)
 shape = SubResource("BoxShape3D_nixu4")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Managers"]
+[node name="CanvasLayer" type="CanvasLayer" parent="Managers" node_paths=PackedStringArray("Crosshair")]
 script = ExtResource("105_dofba")
+Crosshair = NodePath("TextureRect")
 
 [node name="TextureRect" type="TextureRect" parent="Managers/CanvasLayer"]
 anchors_preset = 8
@@ -3034,5 +3035,8 @@ offset_right = 8.0
 offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(8, 8)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource("104_wc0lh")
 expand_mode = 1

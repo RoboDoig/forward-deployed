@@ -27,6 +27,12 @@ public partial class PlayerController : CharacterBody3D
     [Signal]
     public delegate void WorldObjectClickedEventHandler(WorldObject worldObject);
 
+    [Signal]
+    public delegate void WorldObjectHoveredEventHandler(WorldObject worldObject);
+
+    [Signal]
+    public delegate void NoWorldObjectHoveredEventHandler(WorldObject worldObject);
+
     // Walk
     const float gravity = -9.8f * 3;
 
@@ -80,10 +86,14 @@ public partial class PlayerController : CharacterBody3D
             {
                 var worldObject = node as WorldObject;
                 hoveredObject = worldObject;
+
+                EmitSignal(SignalName.WorldObjectHovered, hoveredObject);
             }
             else
             {
                 hoveredObject = null;
+
+                EmitSignal(SignalName.NoWorldObjectHovered, hoveredObject);
             }
         }
     }
