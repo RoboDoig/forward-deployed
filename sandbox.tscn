@@ -1,4 +1,4 @@
-[gd_scene load_steps=207 format=4 uid="uid://b7ehtybjhij05"]
+[gd_scene load_steps=209 format=4 uid="uid://b7ehtybjhij05"]
 
 [ext_resource type="Texture2D" uid="uid://b5s18hea4uk45" path="res://Scenes/black-mesa_GENERIC028.png" id="1_j4lsa"]
 [ext_resource type="Texture2D" uid="uid://c5kr3rdsy3jie" path="res://Scenes/black-mesa_BABTECH_CEIL01.png" id="2_nixu4"]
@@ -101,6 +101,7 @@
 [ext_resource type="Texture2D" uid="uid://b86twnkybjyxn" path="res://Scenes/black-mesa_FIFTSFILE1.png" id="99_n7q35"]
 [ext_resource type="Texture2D" uid="uid://bc0r25cnsk8tr" path="res://Scenes/black-mesa_FIFTIES_WALL12D.png" id="100_u5fvr"]
 [ext_resource type="Texture2D" uid="uid://6e5qfimpmnao" path="res://Scenes/black-mesa_C1A1SIGN3.png" id="101_kkhi2"]
+[ext_resource type="Script" uid="uid://b40xokxy3vjco" path="res://PlayerController.cs" id="102_nixu4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lij5"]
 resource_name = "GENERIC028"
@@ -2961,6 +2962,10 @@ data = PackedVector3Array(-10.6301, 1.0287, 3.4669, -10.6301, -0.343, 3.5432, -1
 background_mode = 1
 background_color = Color(1, 1, 1, 1)
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j4lsa"]
+radius = 0.293202
+height = 1.51999
+
 [node name="Sandbox" type="Node3D"]
 
 [node name="black-mesa" type="Node3D" parent="."]
@@ -2979,3 +2984,16 @@ debug_fill = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_j4lsa")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.63491, -3.68815, -5.30589)
+script = ExtResource("102_nixu4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12481, 0)
+shape = SubResource("CapsuleShape3D_j4lsa")
+
+[node name="Head" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/Head"]
