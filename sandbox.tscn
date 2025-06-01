@@ -1,4 +1,4 @@
-[gd_scene load_steps=214 format=4 uid="uid://b7ehtybjhij05"]
+[gd_scene load_steps=215 format=4 uid="uid://b7ehtybjhij05"]
 
 [ext_resource type="Texture2D" uid="uid://b5s18hea4uk45" path="res://Scenes/black-mesa_GENERIC028.png" id="1_j4lsa"]
 [ext_resource type="Texture2D" uid="uid://c5kr3rdsy3jie" path="res://Scenes/black-mesa_BABTECH_CEIL01.png" id="2_nixu4"]
@@ -106,6 +106,7 @@
 [ext_resource type="Script" uid="uid://bil30y2x6e2qh" path="res://WorldObject.cs" id="103_xxssg"]
 [ext_resource type="Texture2D" uid="uid://dr1v0pef3mudr" path="res://crosshair.png" id="104_wc0lh"]
 [ext_resource type="Script" uid="uid://u06kj2sgmoln" path="res://UiManager.cs" id="105_dofba"]
+[ext_resource type="Script" uid="uid://ebttgt430ta6" path="res://WorldObjectOperatorMachine.cs" id="105_i7jma"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lij5"]
 resource_name = "GENERIC028"
@@ -2971,7 +2972,7 @@ radius = 0.293202
 height = 1.51999
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nixu4"]
-size = Vector3(0.372344, 0.385834, 0.3396)
+size = Vector3(2.14081, 2.67203, 0.829498)
 
 [node name="Sandbox" type="Node3D"]
 
@@ -3017,6 +3018,17 @@ ObjectName = "Terminal"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Managers/Terminal/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00397348, 0.0316315, -0.0135498)
+shape = SubResource("BoxShape3D_nixu4")
+
+[node name="OperatorMachine" type="Node3D" parent="Managers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3146, -2.86822, -7.33318)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Managers/OperatorMachine"]
+script = ExtResource("105_i7jma")
+ObjectName = "Operator Machine"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Managers/OperatorMachine/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0146704, -0.361308, -0.0106354)
 shape = SubResource("BoxShape3D_nixu4")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Managers" node_paths=PackedStringArray("Crosshair")]
