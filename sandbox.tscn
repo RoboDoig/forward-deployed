@@ -2996,7 +2996,7 @@ environment = SubResource("Environment_j4lsa")
 script = ExtResource("102_wydpg")
 
 [node name="Player" type="CharacterBody3D" parent="Managers"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.63491, -3.68815, -5.30589)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5784, -3.68815, -5.30589)
 script = ExtResource("102_nixu4")
 speed = 7.0
 

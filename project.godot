@@ -15,6 +15,11 @@ run/main_scene="uid://b7ehtybjhij05"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+FrameProviderDispatcher="*res://addons/R3.Godot/FrameProviderDispatcher.cs"
+ObservableTrackerRuntimeHook="*res://addons/R3.Godot/ObservableTrackerRuntimeHook.cs"
+
 [display]
 
 window/size/viewport_width=1920
@@ -23,6 +28,10 @@ window/size/viewport_height=1080
 [dotnet]
 
 project/assembly_name="forward-deployed"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/R3.Godot/plugin.cfg")
 
 [input]
 
