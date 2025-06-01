@@ -1,4 +1,4 @@
-[gd_scene load_steps=215 format=4 uid="uid://b7ehtybjhij05"]
+[gd_scene load_steps=216 format=4 uid="uid://b7ehtybjhij05"]
 
 [ext_resource type="Texture2D" uid="uid://b5s18hea4uk45" path="res://Scenes/black-mesa_GENERIC028.png" id="1_j4lsa"]
 [ext_resource type="Texture2D" uid="uid://c5kr3rdsy3jie" path="res://Scenes/black-mesa_BABTECH_CEIL01.png" id="2_nixu4"]
@@ -2972,7 +2972,10 @@ radius = 0.293202
 height = 1.51999
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nixu4"]
-size = Vector3(2.14081, 2.67203, 0.829498)
+size = Vector3(0.398155, 0.361104, 0.384743)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dofba"]
+size = Vector3(2.21679, 2.70439, 0.742121)
 
 [node name="Sandbox" type="Node3D"]
 
@@ -3017,7 +3020,7 @@ script = ExtResource("103_xxssg")
 ObjectName = "Terminal"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Managers/Terminal/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00397348, 0.0316315, -0.0135498)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109504, 0.015142, -0.0101433)
 shape = SubResource("BoxShape3D_nixu4")
 
 [node name="OperatorMachine" type="Node3D" parent="Managers"]
@@ -3028,8 +3031,8 @@ script = ExtResource("105_i7jma")
 ObjectName = "Operator Machine"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Managers/OperatorMachine/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0146704, -0.361308, -0.0106354)
-shape = SubResource("BoxShape3D_nixu4")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0135231, -0.386844, 0.0332212)
+shape = SubResource("BoxShape3D_dofba")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Managers" node_paths=PackedStringArray("Crosshair")]
 script = ExtResource("105_dofba")

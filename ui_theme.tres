@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://qforbqyyxkde"]
+
+[ext_resource type="FontFile" uid="uid://ci2y318j7yn78" path="res://Tektur-Regular.ttf" id="1_touxu"]
+
+[resource]
+default_font = ExtResource("1_touxu")
+default_font_size = 15
+Label/colors/font_color = Color(0.741176, 0.572549, 0.203922, 1)

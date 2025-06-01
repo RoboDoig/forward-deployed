@@ -20,6 +20,13 @@ public partial class WorldObjectOperatorMachine : WorldObject
         var panel = (WorldObjectOperatorMachinePanel)InterfacePanel.Instantiate();
         panel.Title.Text = ObjectName;
 
+        foreach (var vertex in OperatorGraph.Vertices)
+        {
+            var graphNode = (GraphNode)vertex.GraphNode.Instantiate();
+            graphNode.Title = vertex.GetOperatorName();
+            panel.GraphEdit.AddChild(graphNode);
+        }
+
         return panel;
     }
 }

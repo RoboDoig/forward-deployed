@@ -7,7 +7,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wydpg"]
 bg_color = Color(0, 0, 0, 0.435294)
 
-[node name="WorldObjectOperatorMachinePanel" type="Control" node_paths=PackedStringArray("CloseButton", "Title")]
+[node name="WorldObjectOperatorMachinePanel" type="Control" node_paths=PackedStringArray("GraphEdit", "CloseButton", "Title")]
 custom_minimum_size = Vector2(1000, 1000)
 layout_mode = 3
 anchors_preset = 8
@@ -22,6 +22,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_04ubh")
+GraphEdit = NodePath("Panel/MarginContainer/VBoxContainer/GraphEdit")
 CloseButton = NodePath("Panel/MarginContainer/CloseButton")
 Title = NodePath("Panel/MarginContainer/VBoxContainer/Title")
 

@@ -13,6 +13,11 @@ public class OperatorPrinter : Operator<int, Unit>
 
     }
 
+    public override string GetOperatorName()
+    {
+        return "OperatorPrinter";
+    }
+
     protected override Observable<Unit> CreateDataObservable()
     {
         return InputSubject.Select(x =>

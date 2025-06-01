@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bd2a6m61lm6ev"]
+
+[ext_resource type="Theme" uid="uid://qforbqyyxkde" path="res://ui_theme.tres" id="1_8mmoc"]
+[ext_resource type="Script" uid="uid://r2xli5d6owof" path="res://GraphNodeOperator.cs" id="2_4r1s2"]
+
+[node name="GraphNode" type="GraphNode"]
+custom_minimum_size = Vector2(100, 100)
+offset_top = 32.0
+offset_right = 100.0
+offset_bottom = 132.0
+mouse_filter = 1
+theme = ExtResource("1_8mmoc")
+title = "Node"
+script = ExtResource("2_4r1s2")

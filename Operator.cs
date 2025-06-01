@@ -18,6 +18,11 @@ public class Operator<TSource, TResult> : IOperator
         DataSubject.Connect();
     }
 
+    public virtual string GetOperatorName()
+    {
+        return "Operator";
+    }
+
     protected virtual Subject<TSource> CreateInputSubject() {
         return new Subject<TSource>();
     }
