@@ -6,11 +6,11 @@ public partial class WorldObjectOperatorMachine : WorldObject
 {
     public override PackedScene InterfacePanel => ResourceLoader.Load<PackedScene>("res://world_object_operator_machine_panel.tscn");
 
-    public AdjacencyGraph<IOperator, Edge<IOperator>> OperatorGraph;
+    public AdjacencyGraph<Operator, Edge<Operator>> OperatorGraph;
 
     public override void _Ready()
     {
-        OperatorGraph = new AdjacencyGraph<IOperator, Edge<IOperator>>();
+        OperatorGraph = new AdjacencyGraph<Operator, Edge<Operator>>();
 
         OperatorGraph.AddVertex(new OperatorPrinter());
     }

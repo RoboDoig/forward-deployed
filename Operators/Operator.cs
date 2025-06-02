@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Godot.HttpRequest;
 
-public class Operator<TSource, TResult> : IOperator
+public class Operator<TSource, TResult> : Operator
 {
     public Subject<TSource> InputSubject { get; protected set; }
     public ConnectableObservable<TResult> DataSubject { get; protected set; }
@@ -41,4 +42,9 @@ public class Operator<TSource, TResult> : IOperator
     {
         return typeof(TResult);
     }
+}
+
+public abstract class Operator
+{
+
 }
