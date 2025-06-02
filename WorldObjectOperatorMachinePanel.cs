@@ -76,6 +76,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         };
         operatorGraph.Graph.EdgeRemoved += edgeRemovedAction;
 
+        // Unsubscribe from handlers
         TreeExited += () =>
         {
             GraphEdit.ConnectionRequest -= connectionRequestHandler;
