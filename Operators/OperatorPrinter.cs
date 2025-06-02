@@ -20,10 +20,6 @@ public class OperatorPrinter : Operator<int, Unit>
 
     protected override Observable<Unit> CreateDataObservable()
     {
-        return InputSubject.Select(x =>
-        {
-            GD.Print(x);
-            return Unit.Default;
-        });
+        return InputSubject.Select(x => Unit.Default).Do(x => GD.Print(x));
     }
 }

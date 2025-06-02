@@ -12,7 +12,13 @@ public partial class WorldObjectOperatorMachine : WorldObject
     {
         OperatorGraph = new AdjacencyGraph<IOperator, Edge<IOperator>>();
 
-        OperatorGraph.AddVertex(new OperatorPrinter());
+        var operatorPrinter = new OperatorPrinter();
+        var timer = new OperatorIntegerTimer();
+
+        OperatorGraph.AddVertex(operatorPrinter);
+        OperatorGraph.AddVertex(timer);
+
+        OperatorGraph.AddEdge(new Edge<IOperator>(timer, operatorPrinter));
     }
 
     public override WorldObjectPanel CreateInterfacePanel(UiManager uiManager)
@@ -20,18 +26,7 @@ public partial class WorldObjectOperatorMachine : WorldObject
         var panel = (WorldObjectOperatorMachinePanel)InterfacePanel.Instantiate();
         panel.Title.Text = ObjectName;
 
-        foreach (var vertex in OperatorGraph.Vertices)
-        {
-            var graphNode = (GraphNodeOperator)vertex.GraphNode.Instantiate();
-            graphNode.Title = vertex.GetOperatorName();
-
-            panel.GraphEdit.AddChild(graphNode);
-
-            graphNode.SetSlot(
-                0, true, vertex.GetSourceType().GetHashCode(), new Color(1, 1, 1),
-                true, vertex.GetResultType().GetHashCode(), new Color(1, 1, 1)
-            );
-        }
+        panel.InitialiseGraphEditorFromOperatorGraph(OperatorGraph);
 
         return panel;
     }
