@@ -17,8 +17,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         // Draw existing nodes and edges
         foreach (var vertex in operatorGraph.Graph.Vertices)
         {
-            var graphNode = (GraphNodeOperator)vertex.GraphNode.Instantiate();
-            graphNode.Title = vertex.GetOperatorName();
+            var graphNode = vertex.CreateGraphNode();
 
             OperatorMapping.Add(vertex, graphNode);
 

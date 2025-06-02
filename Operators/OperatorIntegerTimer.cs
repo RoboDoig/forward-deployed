@@ -15,6 +15,6 @@ public class OperatorIntegerTimer : Operator<Unit, int>
 
     protected override Observable<int> CreateDataObservable()
     {
-        return Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Index().Do(x => GD.Print(x));
+        return Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Index();
     }
 }

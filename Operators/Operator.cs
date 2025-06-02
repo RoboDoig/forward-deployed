@@ -41,4 +41,25 @@ public class Operator<TSource, TResult> : IOperator
     {
         return typeof(TResult);
     }
+
+    public virtual GraphNodeOperator CreateGraphNode()
+    {
+        PackedScene graphNodeScene = ResourceLoader.Load<PackedScene>("res://graph_node.tscn");
+        GraphNodeOperator graphNodeOperator = (GraphNodeOperator)graphNodeScene.Instantiate();
+
+        graphNodeOperator.Title = GetOperatorName();
+
+        var sub = DataSubject.Subscribe(x =>
+        {
+            graphNodeOperator.DisplayLabel.Text = x.ToString();
+        });
+
+        // The subscription must be disposed when the graph node exits the tree, otherwise we'll get errors from the observable chain.
+        graphNodeOperator.TreeExited += () =>
+        {
+            sub.Dispose();
+        };
+
+        return graphNodeOperator;
+    }
 }
