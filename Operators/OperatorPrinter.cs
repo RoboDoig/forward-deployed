@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class OperatorPrinter : Operator<int, Unit>
+public class OperatorPrinter : Operator<int, string>
 {
     public OperatorPrinter() : base()
     {
@@ -18,8 +18,8 @@ public class OperatorPrinter : Operator<int, Unit>
         return "OperatorPrinter";
     }
 
-    protected override Observable<Unit> CreateDataObservable()
+    protected override Observable<string> CreateDataObservable()
     {
-        return InputSubject.Select(x => Unit.Default).Do(x => GD.Print(x));
+        return InputSubject.Select(x => x.ToString());
     }
 }

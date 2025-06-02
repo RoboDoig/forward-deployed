@@ -49,6 +49,11 @@ public class Operator<TSource, TResult> : IOperator
 
         graphNodeOperator.Title = GetOperatorName();
 
+        graphNodeOperator.SetSlot(
+            0, true, GetSourceType().GetHashCode(), new Color(1, 1, 1),
+            true, GetResultType().GetHashCode(), new Color(1, 1, 1)
+        );
+
         var sub = DataSubject.Subscribe(x =>
         {
             graphNodeOperator.DisplayLabel.Text = x.ToString();

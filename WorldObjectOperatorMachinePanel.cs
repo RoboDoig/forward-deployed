@@ -2,6 +2,8 @@ using Godot;
 using QuikGraph;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 
 public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
 {
@@ -22,58 +24,64 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
             OperatorMapping.Add(vertex, graphNode);
 
             GraphEdit.AddChild(graphNode);
-
-            graphNode.SetSlot(
-                0, true, vertex.GetSourceType().GetHashCode(), new Color(1, 1, 1),
-                true, vertex.GetResultType().GetHashCode(), new Color(1, 1, 1)
-            );
         }
 
         foreach (var edge in operatorGraph.Graph.Edges)
         {
+            // TODO - hard coded indices
             GraphEdit.ConnectNode(OperatorMapping[edge.Source].Name, 0, OperatorMapping[edge.Target].Name, 0);
         }
 
-        // Connect graph edit signals
-        GraphEdit.ConnectionRequest += (a, b, c, d) =>
+        // Connect graph edit signals, TODO - repeated code for looking up dict in reverse
+        Godot.GraphEdit.ConnectionRequestEventHandler connectionRequestHandler = (StringName fromNode, long fromIndex, StringName toNode, long toIndex) =>
         {
-
+            var from = (GraphNodeOperator)GraphEdit.GetNode(fromNode.ToString());
+            var fromOperator = OperatorMapping.Where(kvp => kvp.Value == from).First().Key;
+            var to = (GraphNodeOperator)GraphEdit.GetNode(toNode.ToString());
+            var toOperator = OperatorMapping.Where(kvp => kvp.Value == to).First().Key;
+            operatorGraph.ConnectOperators(fromOperator, toOperator);
         };
+        GraphEdit.ConnectionRequest += connectionRequestHandler;
 
-        GraphEdit.DisconnectionRequest += (a, b, c, d) =>
+        Godot.GraphEdit.DisconnectionRequestEventHandler disconnectionRequestHandler = (StringName fromNode, long fromIndex, StringName toNode, long toIndex) =>
         {
-
+            var from = (GraphNodeOperator)GraphEdit.GetNode(fromNode.ToString());
+            var fromOperator = OperatorMapping.Where(kvp => kvp.Value == from).First().Key;
+            var to = (GraphNodeOperator)GraphEdit.GetNode(toNode.ToString());
+            var toOperator = OperatorMapping.Where(kvp => kvp.Value == to).First().Key;
+            operatorGraph.DisconnectOperators(fromOperator, toOperator);
         };
+        GraphEdit.DisconnectionRequest += disconnectionRequestHandler;
 
         // Connect graph signals
-        operatorGraph.Graph.VertexAdded += (a) =>
+        operatorGraph.Graph.VertexAdded += (v) =>
         {
 
         };
 
-        operatorGraph.Graph.VertexRemoved += (a) =>
+        operatorGraph.Graph.VertexRemoved += (v) =>
         {
 
         };
 
-        operatorGraph.Graph.EdgeAdded += (a) =>
+        EdgeAction<IOperator, Edge<IOperator>> edgeAddedAction = (e) =>
         {
-
+            GraphEdit.ConnectNode(OperatorMapping[e.Source].Name, 0, OperatorMapping[e.Target].Name, 0);
         };
+        operatorGraph.Graph.EdgeAdded += edgeAddedAction;
 
-        operatorGraph.Graph.EdgeRemoved += (a) =>
+        EdgeAction<IOperator, Edge<IOperator>> edgeRemovedAction = (e) =>
         {
-
+            GraphEdit.DisconnectNode(OperatorMapping[e.Source].Name, 0, OperatorMapping[e.Target].Name, 0);
         };
-    }
+        operatorGraph.Graph.EdgeRemoved += edgeRemovedAction;
 
-    private bool TryConnectOperators()
-    {
-        return false;
-    }
-
-    private bool TryDisconnectOperators()
-    {
-        return false;
+        TreeExited += () =>
+        {
+            GraphEdit.ConnectionRequest -= connectionRequestHandler;
+            GraphEdit.DisconnectionRequest -= disconnectionRequestHandler;
+            operatorGraph.Graph.EdgeAdded -= edgeAddedAction;
+            operatorGraph.Graph.EdgeRemoved -= edgeRemovedAction;
+        };
     }
 }

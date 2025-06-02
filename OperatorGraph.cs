@@ -1,4 +1,6 @@
+using Godot;
 using QuikGraph;
+using R3;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +17,24 @@ public class OperatorGraph
         Graph = new AdjacencyGraph<IOperator, Edge<IOperator>>();
         ObservableEdges = new Dictionary<Edge<IOperator>, IDisposable>();
 
-        Graph.EdgeAdded += (v) =>
+        Graph.EdgeAdded += (e) =>
         {
             // Create the disposable connection and add to observable edges
-            //ObservableEdges.Add(v.Source);
+            var fromOperator = e.Source;
+            var fromDataSubject = e.Source.GetType().GetProperty("DataSubject");
+            var toInputSubject = e.Target.GetType().GetProperty("InputSubject");
+
+            var connectMethod = GetType().GetMethod("ConnectSubjects").MakeGenericMethod(fromDataSubject.PropertyType.GetGenericArguments());
+            var connect = connectMethod.Invoke(null, [fromDataSubject.GetValue(e.Source), toInputSubject.GetValue(e.Target)]) as IDisposable;
+
+            ObservableEdges.Add(e, connect);
         };
 
-        Graph.EdgeRemoved += (v) =>
+        Graph.EdgeRemoved += (e) =>
         {
             // Find the disposable connection and dispose it
+            ObservableEdges[e].Dispose();
+            ObservableEdges.Remove(e);
         };
     }
 
@@ -44,5 +55,15 @@ public class OperatorGraph
 
     public void DisconnectOperators(IOperator from, IOperator to)
     {
+        Edge<IOperator> edgeToRemove;
+        bool edgeExists = Graph.TryGetEdge(from, to, out edgeToRemove);
+
+        if (edgeExists)
+            Graph.RemoveEdge(edgeToRemove);
+    }
+
+    public static IDisposable ConnectSubjects<T>(ConnectableObservable<T> from, Subject<T> to)
+    {
+        return from.Multicast(to).Connect();
     }
 }

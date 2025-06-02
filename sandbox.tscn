@@ -3028,6 +3028,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3146, -2.86822, -7.33318)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Managers/OperatorMachine"]
 script = ExtResource("105_i7jma")
+ObjectName = "OperatorMachine"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Managers/OperatorMachine/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0135231, -0.386844, 0.0332212)
