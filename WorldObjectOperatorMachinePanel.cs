@@ -10,12 +10,12 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
 
     private Dictionary<IOperator, GraphNodeOperator> OperatorMapping;
 
-    public void InitialiseGraphEditorFromOperatorGraph(AdjacencyGraph<IOperator, Edge<IOperator>> operatorGraph)
+    public void InitialiseGraphEditorFromOperatorGraph(OperatorGraph operatorGraph)
     {
         OperatorMapping = new Dictionary<IOperator, GraphNodeOperator>();
 
         // Draw existing nodes and edges
-        foreach (var vertex in operatorGraph.Vertices)
+        foreach (var vertex in operatorGraph.Graph.Vertices)
         {
             var graphNode = (GraphNodeOperator)vertex.GraphNode.Instantiate();
             graphNode.Title = vertex.GetOperatorName();
@@ -30,7 +30,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
             );
         }
 
-        foreach (var edge in operatorGraph.Edges)
+        foreach (var edge in operatorGraph.Graph.Edges)
         {
             GraphEdit.ConnectNode(OperatorMapping[edge.Source].Name, 0, OperatorMapping[edge.Target].Name, 0);
         }
@@ -47,22 +47,22 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         };
 
         // Connect graph signals
-        operatorGraph.VertexAdded += (a) =>
+        operatorGraph.Graph.VertexAdded += (a) =>
         {
 
         };
 
-        operatorGraph.VertexRemoved += (a) =>
+        operatorGraph.Graph.VertexRemoved += (a) =>
         {
 
         };
 
-        operatorGraph.EdgeAdded += (a) =>
+        operatorGraph.Graph.EdgeAdded += (a) =>
         {
 
         };
 
-        operatorGraph.EdgeRemoved += (a) =>
+        operatorGraph.Graph.EdgeRemoved += (a) =>
         {
 
         };
