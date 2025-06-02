@@ -31,4 +31,14 @@ public class Operator<TSource, TResult> : IOperator
     {
         return Observable.Never<TResult>();
     }
+
+    public Type GetSourceType()
+    {
+        return typeof(TSource);
+    }
+
+    public Type GetResultType()
+    {
+        return typeof(TResult);
+    }
 }

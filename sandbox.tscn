@@ -103,10 +103,10 @@
 [ext_resource type="Texture2D" uid="uid://6e5qfimpmnao" path="res://Scenes/black-mesa_C1A1SIGN3.png" id="101_kkhi2"]
 [ext_resource type="Script" uid="uid://b40xokxy3vjco" path="res://PlayerController.cs" id="102_nixu4"]
 [ext_resource type="Script" uid="uid://bgm60iim550qg" path="res://GeneralManager.cs" id="102_wydpg"]
-[ext_resource type="Script" uid="uid://bil30y2x6e2qh" path="res://WorldObject.cs" id="103_xxssg"]
+[ext_resource type="Script" uid="uid://ci7kg0s6q8ewg" path="res://WorldObjects/WorldObject.cs" id="103_xxssg"]
 [ext_resource type="Texture2D" uid="uid://dr1v0pef3mudr" path="res://crosshair.png" id="104_wc0lh"]
 [ext_resource type="Script" uid="uid://u06kj2sgmoln" path="res://UiManager.cs" id="105_dofba"]
-[ext_resource type="Script" uid="uid://ebttgt430ta6" path="res://WorldObjectOperatorMachine.cs" id="105_i7jma"]
+[ext_resource type="Script" uid="uid://csmns5hcy2yq8" path="res://WorldObjects/WorldObjectOperatorMachine.cs" id="105_i7jma"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lij5"]
 resource_name = "GENERIC028"
@@ -3028,7 +3028,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3146, -2.86822, -7.33318)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Managers/OperatorMachine"]
 script = ExtResource("105_i7jma")
-ObjectName = "Operator Machine"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Managers/OperatorMachine/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0135231, -0.386844, 0.0332212)
