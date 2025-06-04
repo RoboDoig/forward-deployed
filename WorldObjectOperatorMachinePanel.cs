@@ -10,11 +10,42 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
     [Export]
     public GraphEdit GraphEdit;
 
+    [Export]
+    public Button AddTimerButton;
+    [Export]
+    public Button AddIsEvenButton;
+
     private Dictionary<IOperator, GraphNodeOperator> OperatorMapping;
+    private OperatorGraph OperatorGraph;
+
+    public override void _Ready()
+    {
+        base._Ready();
+
+        Action addTimerPressedHandler = () =>
+        {
+            var timer = new OperatorIntegerTimer();
+            OperatorGraph.AddOperator(timer); // TODO - this should maybe signal 'up' to the world object
+        };
+        AddTimerButton.Pressed += addTimerPressedHandler;
+
+        Action isEvenPressedHandler = () =>
+        {
+            var isEven = new OperatorIntegerIsEven();
+            OperatorGraph.AddOperator(isEven);
+        };
+        AddIsEvenButton.Pressed += isEvenPressedHandler;
+
+        //TreeExited += () =>
+        //{
+        //    AddTimerButton.Pressed -= addTimerPressedHandler;
+        //};
+    }
 
     public void InitialiseGraphEditorFromOperatorGraph(OperatorGraph operatorGraph)
     {
         OperatorMapping = new Dictionary<IOperator, GraphNodeOperator>();
+        OperatorGraph = operatorGraph;
 
         // Draw existing nodes and edges
         foreach (var vertex in operatorGraph.Graph.Vertices)
@@ -54,10 +85,13 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         GraphEdit.DisconnectionRequest += disconnectionRequestHandler;
 
         // Connect graph signals
-        operatorGraph.Graph.VertexAdded += (v) =>
+        VertexAction<IOperator> vertexAddedAction = (v) =>
         {
-
+            var graphNode = v.CreateGraphNode();
+            OperatorMapping.Add(v, graphNode);
+            GraphEdit.AddChild(graphNode);
         };
+        operatorGraph.Graph.VertexAdded += vertexAddedAction;
 
         operatorGraph.Graph.VertexRemoved += (v) =>
         {
@@ -83,6 +117,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
             GraphEdit.DisconnectionRequest -= disconnectionRequestHandler;
             operatorGraph.Graph.EdgeAdded -= edgeAddedAction;
             operatorGraph.Graph.EdgeRemoved -= edgeRemovedAction;
+            operatorGraph.Graph.VertexAdded -= vertexAddedAction;
         };
     }
 }

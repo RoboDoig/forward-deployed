@@ -1,5 +1,6 @@
 using Godot;
 using QuikGraph;
+using R3;
 using System;
 using System.Collections.Generic;
 
@@ -13,13 +14,15 @@ public partial class WorldObjectOperatorMachine : WorldObject
     {
         OperatorGraph = new OperatorGraph();
 
-        var operatorPrinter = new OperatorPrinter();
-        var timer = new OperatorIntegerTimer();
+        //var operatorPrinter = new OperatorPrinter();
+        //var timer = new OperatorIntegerTimer();
 
-        OperatorGraph.AddOperator(operatorPrinter);
-        OperatorGraph.AddOperator(timer);
+        //OperatorGraph.AddOperator(operatorPrinter);
+        //OperatorGraph.AddOperator(timer);
 
-        OperatorGraph.ConnectOperators(timer, operatorPrinter);
+        //OperatorGraph.ConnectOperators(timer, operatorPrinter);
+
+        OperatorGraph.AddOperator(new OperatorBooleanSignal());
     }
 
     public override WorldObjectPanel CreateInterfacePanel(UiManager uiManager)
@@ -30,5 +33,18 @@ public partial class WorldObjectOperatorMachine : WorldObject
         panel.InitialiseGraphEditorFromOperatorGraph(OperatorGraph);
 
         return panel;
+    }
+
+    public class OperatorBooleanSignal : Operator<bool, bool>
+    {
+        public override string GetOperatorName()
+        {
+            return "OperatorBooleanSignal";
+        }
+
+        protected override Observable<bool> CreateDataObservable()
+        {
+            return InputSubject.Select(x => x);
+        }
     }
 }
