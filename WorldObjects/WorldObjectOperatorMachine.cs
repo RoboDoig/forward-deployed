@@ -10,6 +10,9 @@ public partial class WorldObjectOperatorMachine : WorldObject
 
     public OperatorGraph OperatorGraph;
 
+    [Export]
+    private Light3D SignalLight;
+
     public override void _Ready()
     {
         OperatorGraph = new OperatorGraph();
@@ -22,7 +25,20 @@ public partial class WorldObjectOperatorMachine : WorldObject
 
         //OperatorGraph.ConnectOperators(timer, operatorPrinter);
 
-        OperatorGraph.AddOperator(new OperatorBooleanSignal());
+        var outputOperator = new OperatorBooleanSignal();
+        OperatorGraph.AddOperator(outputOperator);
+
+        outputOperator.DataSubject.Subscribe(x =>
+        {
+            if (x)
+            {
+                SignalLight.LightColor = new Color(0, 1, 0);
+            }
+            else
+            {
+                SignalLight.LightColor = new Color(1, 0, 0);
+            }
+        });
     }
 
     public override WorldObjectPanel CreateInterfacePanel(UiManager uiManager)

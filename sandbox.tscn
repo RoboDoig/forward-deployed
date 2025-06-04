@@ -3026,13 +3026,18 @@ shape = SubResource("BoxShape3D_nixu4")
 [node name="OperatorMachine" type="Node3D" parent="Managers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3146, -2.86822, -7.33318)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Managers/OperatorMachine"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Managers/OperatorMachine" node_paths=PackedStringArray("SignalLight")]
 script = ExtResource("105_i7jma")
+SignalLight = NodePath("../OmniLight3D")
 ObjectName = "OperatorMachine"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Managers/OperatorMachine/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0135231, -0.386844, 0.0332212)
 shape = SubResource("BoxShape3D_dofba")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Managers/OperatorMachine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22, 0.545, 0.525)
+light_color = Color(0.973524, 8.66354e-07, 0.553472, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Managers" node_paths=PackedStringArray("Crosshair")]
 script = ExtResource("105_dofba")
