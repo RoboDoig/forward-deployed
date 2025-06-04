@@ -7,7 +7,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wydpg"]
 bg_color = Color(0, 0, 0, 0.435294)
 
-[node name="WorldObjectOperatorMachinePanel" type="Control" node_paths=PackedStringArray("GraphEdit", "CloseButton", "Title")]
+[node name="WorldObjectOperatorMachinePanel" type="Control" node_paths=PackedStringArray("GraphEdit", "AddTimerButton", "AddIsEvenButton", "AddNotButton", "CloseButton", "Title")]
 custom_minimum_size = Vector2(1000, 1000)
 layout_mode = 3
 anchors_preset = 8
@@ -23,6 +23,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_04ubh")
 GraphEdit = NodePath("Panel/MarginContainer/VBoxContainer/GraphEdit")
+AddTimerButton = NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer/AddTimerButton")
+AddIsEvenButton = NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer/AddIsEvenButton")
+AddNotButton = NodePath("Panel/MarginContainer/VBoxContainer/HBoxContainer/AddNotButton")
 CloseButton = NodePath("Panel/MarginContainer/CloseButton")
 Title = NodePath("Panel/MarginContainer/VBoxContainer/Title")
 
@@ -58,9 +61,29 @@ text = "World Object"
 label_settings = ExtResource("2_e4gjw")
 horizontal_alignment = 1
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="AddTimerButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Timer"
+
+[node name="AddIsEvenButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "IsEven"
+
+[node name="AddNotButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "NOT"
+
 [node name="GraphEdit" type="GraphEdit" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+scroll_offset = Vector2(0, -50)
 right_disconnects = true
 
 [node name="CloseButton" type="Button" parent="Panel/MarginContainer"]
