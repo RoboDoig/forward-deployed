@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 public class OperatorGraph
 {
     public AdjacencyGraph<IOperator, Edge<IOperator>> Graph { get; private set; }
-    private Dictionary<Edge<IOperator>, IDisposable> ObservableEdges;
+    private Dictionary<Edge<IOperator>, IDisposable> ObservableEdges; // Map of graph edges to disposable connections between operators
 
     public OperatorGraph()
     {

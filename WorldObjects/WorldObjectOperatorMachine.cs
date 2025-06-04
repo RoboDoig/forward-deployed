@@ -17,16 +17,13 @@ public partial class WorldObjectOperatorMachine : WorldObject
     {
         OperatorGraph = new OperatorGraph();
 
-        //var operatorPrinter = new OperatorPrinter();
-        //var timer = new OperatorIntegerTimer();
-
-        //OperatorGraph.AddOperator(operatorPrinter);
-        //OperatorGraph.AddOperator(timer);
-
-        //OperatorGraph.ConnectOperators(timer, operatorPrinter);
-
         var outputOperator = new OperatorBooleanSignal();
         OperatorGraph.AddOperator(outputOperator);
+
+        var notOperator = new OperatorNot();
+        OperatorGraph.AddOperator(notOperator);
+
+        OperatorGraph.ConnectOperators(notOperator, outputOperator);
 
         outputOperator.DataSubject.Subscribe(x =>
         {

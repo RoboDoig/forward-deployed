@@ -44,11 +44,6 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
             OperatorGraph.AddOperator(not);
         };
         AddNotButton.Pressed += notPressedHandler;
-
-        //TreeExited += () =>
-        //{
-        //    AddTimerButton.Pressed -= addTimerPressedHandler;
-        //};
     }
 
     public void InitialiseGraphEditorFromOperatorGraph(OperatorGraph operatorGraph)
