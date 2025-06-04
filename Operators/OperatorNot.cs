@@ -5,19 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class OperatorIntegerIsEven : Operator<int, bool>
+public class OperatorNot : Operator<bool, bool>
 {
     public override string GetOperatorName()
     {
-        return "OperatorIntegerIsEven";
+        return "OperatorNOT";
     }
 
     protected override Observable<bool> CreateDataObservable()
     {
-        return InputSubject.Select(x =>
-        {
-            return int.IsEvenInteger(x);
-        });
+        return InputSubject.Select(x => !x);
     }
 }
 

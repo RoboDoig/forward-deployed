@@ -14,6 +14,8 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
     public Button AddTimerButton;
     [Export]
     public Button AddIsEvenButton;
+    [Export]
+    public Button AddNotButton;
 
     private Dictionary<IOperator, GraphNodeOperator> OperatorMapping;
     private OperatorGraph OperatorGraph;
@@ -35,6 +37,13 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
             OperatorGraph.AddOperator(isEven);
         };
         AddIsEvenButton.Pressed += isEvenPressedHandler;
+
+        Action notPressedHandler = () =>
+        {
+            var not = new OperatorNot();
+            OperatorGraph.AddOperator(not);
+        };
+        AddNotButton.Pressed += notPressedHandler;
 
         //TreeExited += () =>
         //{
