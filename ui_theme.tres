@@ -5,4 +5,5 @@
 [resource]
 default_font = ExtResource("1_touxu")
 default_font_size = 15
+Button/colors/font_color = Color(0.623529, 0.505882, 0.243137, 1)
 Label/colors/font_color = Color(0.741176, 0.572549, 0.203922, 1)

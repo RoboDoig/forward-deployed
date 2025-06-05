@@ -48,6 +48,21 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         AddNotButton.Pressed += notPressedHandler;
     }
 
+    public void CreateGraphEditNode(OperatorGraph operatorGraph, GraphNodeMetadata graphNodeMetadata)
+    {
+        var graphNode = graphNodeMetadata.Operator.CreateGraphNode();
+        Action graphNodeClosedAction = () =>
+        {
+            operatorGraph.RemoveOperator(graphNodeMetadata.Operator);
+        };
+        graphNode.CloseButton.Pressed += graphNodeClosedAction;
+        graphNode.TreeExited += () => graphNode.CloseButton.Pressed -= graphNodeClosedAction;
+
+        graphNode.PositionOffset = graphNodeMetadata.LayoutOffset;
+        OperatorMapping.Add(graphNodeMetadata, graphNode);
+        GraphEdit.AddChild(graphNode);
+    }
+
     public void InitialiseGraphEditorFromOperatorGraph(OperatorGraph operatorGraph)
     {
         OperatorMapping = new Dictionary<GraphNodeMetadata, GraphNodeOperator>(); // TODO - this is always 1-to-1, should instead be some kind of bidirectional dictionary
@@ -56,12 +71,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         // Draw existing nodes and edges
         foreach (var vertex in operatorGraph.Graph.Vertices)
         {
-            var graphNode = vertex.Operator.CreateGraphNode();
-            graphNode.PositionOffset = vertex.LayoutOffset;
-
-            OperatorMapping.Add(vertex, graphNode);
-
-            GraphEdit.AddChild(graphNode);
+            CreateGraphEditNode(operatorGraph, vertex);
         }
 
         foreach (var edge in operatorGraph.Graph.Edges)
@@ -110,15 +120,13 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         // Connect graph signals
         VertexAction<GraphNodeMetadata> vertexAddedAction = (v) =>
         {
-            var graphNode = v.Operator.CreateGraphNode();
-            OperatorMapping.Add(v, graphNode);
-            GraphEdit.AddChild(graphNode);
+            CreateGraphEditNode(operatorGraph, v);
         };
         operatorGraph.Graph.VertexAdded += vertexAddedAction;
 
         operatorGraph.Graph.VertexRemoved += (v) =>
         {
-
+            OperatorMapping[v].QueueFree();
         };
 
         EdgeAction<GraphNodeMetadata, Edge<GraphNodeMetadata>> edgeAddedAction = (e) =>

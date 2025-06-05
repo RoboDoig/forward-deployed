@@ -1,10 +1,10 @@
 using Godot;
 using R3;
 using System;
+using static Godot.HttpRequest;
 
 public interface IOperator
 {
-
     // TODO - this is also not very nice
     public string GetOperatorName();
 
