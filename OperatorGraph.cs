@@ -9,23 +9,23 @@ using System.Threading.Tasks;
 
 public class OperatorGraph
 {
-    public AdjacencyGraph<IOperator, Edge<IOperator>> Graph { get; private set; }
-    private Dictionary<Edge<IOperator>, IDisposable> ObservableEdges; // Map of graph edges to disposable connections between operators
+    public AdjacencyGraph<GraphNodeMetadata, Edge<GraphNodeMetadata>> Graph { get; private set; }
+    private Dictionary<Edge<GraphNodeMetadata>, IDisposable> ObservableEdges; // Map of graph edges to disposable connections between operators
 
     public OperatorGraph()
     {
-        Graph = new AdjacencyGraph<IOperator, Edge<IOperator>>();
-        ObservableEdges = new Dictionary<Edge<IOperator>, IDisposable>();
+        Graph = new AdjacencyGraph<GraphNodeMetadata, Edge<GraphNodeMetadata>>();
+        ObservableEdges = new Dictionary<Edge<GraphNodeMetadata>, IDisposable>();
 
         Graph.EdgeAdded += (e) =>
         {
             // Create the disposable connection and add to observable edges
-            var fromOperator = e.Source;
-            var fromDataSubject = e.Source.GetType().GetProperty("DataSubject");
-            var toInputSubject = e.Target.GetType().GetProperty("InputSubject");
+            var fromOperator = e.Source.Operator;
+            var fromDataSubject = e.Source.Operator.GetType().GetProperty("DataSubject");
+            var toInputSubject = e.Target.Operator.GetType().GetProperty("InputSubject");
 
             var connectMethod = GetType().GetMethod("ConnectSubjects").MakeGenericMethod(fromDataSubject.PropertyType.GetGenericArguments());
-            var connect = connectMethod.Invoke(null, [fromDataSubject.GetValue(e.Source), toInputSubject.GetValue(e.Target)]) as IDisposable;
+            var connect = connectMethod.Invoke(null, [fromDataSubject.GetValue(e.Source.Operator), toInputSubject.GetValue(e.Target.Operator)]) as IDisposable;
 
             ObservableEdges.Add(e, connect);
         };
@@ -38,24 +38,32 @@ public class OperatorGraph
         };
     }
 
-    public void AddOperator(IOperator op)
+    public GraphNodeMetadata AddOperator(IOperator op)
     {
-        Graph.AddVertex(op);
+        var node = new GraphNodeMetadata { Operator = op };
+        Graph.AddVertex(new GraphNodeMetadata { Operator = op });
+        return node;
+    }
+
+    public GraphNodeMetadata AddOperator(GraphNodeMetadata node)
+    {
+        Graph.AddVertex(node);
+        return node;
     }
 
     public void RemoveOperator(IOperator op)
     {
-        Graph.RemoveVertex(op);
+        Graph.RemoveVertex(new GraphNodeMetadata { Operator = op });
     }
 
-    public void ConnectOperators(IOperator from, IOperator to)
+    public void ConnectOperators(GraphNodeMetadata from, GraphNodeMetadata to)
     {
-        Graph.AddEdge(new Edge<IOperator>(from, to));
+        Graph.AddEdge(new Edge<GraphNodeMetadata>(from, to));
     }
 
-    public void DisconnectOperators(IOperator from, IOperator to)
+    public void DisconnectOperators(GraphNodeMetadata from, GraphNodeMetadata to)
     {
-        Edge<IOperator> edgeToRemove;
+        Edge<GraphNodeMetadata> edgeToRemove;
         bool edgeExists = Graph.TryGetEdge(from, to, out edgeToRemove);
 
         if (edgeExists)
@@ -65,5 +73,12 @@ public class OperatorGraph
     public static IDisposable ConnectSubjects<T>(ConnectableObservable<T> from, Subject<T> to)
     {
         return from.Multicast(to).Connect();
+    }
+
+    public class GraphNodeMetadata
+    {
+        public IOperator Operator;
+        public Vector2 LayoutOffset;
+        public bool Permanent;
     }
 }
