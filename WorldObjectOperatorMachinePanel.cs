@@ -50,7 +50,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
 
     public void InitialiseGraphEditorFromOperatorGraph(OperatorGraph operatorGraph)
     {
-        OperatorMapping = new Dictionary<GraphNodeMetadata, GraphNodeOperator>();
+        OperatorMapping = new Dictionary<GraphNodeMetadata, GraphNodeOperator>(); // TODO - this is always 1-to-1, should instead be some kind of bidirectional dictionary
         OperatorGraph = operatorGraph;
 
         // Draw existing nodes and edges
@@ -95,12 +95,10 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         {
             var selectedNode = (GraphNodeOperator)n;
             CurrentSelected = selectedNode;
-            GD.Print(CurrentSelected);
         };
         GraphEdit.NodeSelected += nodeSelectedAction;
 
         Action moveNodeFinishedAction = () => {
-            GD.Print("move finished");
             if (CurrentSelected != null)
             {
                 var selectedOperator = OperatorMapping.Where(kvp => kvp.Value == CurrentSelected).First().Key;
@@ -142,6 +140,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
             GraphEdit.DisconnectionRequest -= disconnectionRequestHandler;
             GraphEdit.NodeSelected -= nodeSelectedAction;
             GraphEdit.EndNodeMove -= moveNodeFinishedAction;
+
             operatorGraph.Graph.EdgeAdded -= edgeAddedAction;
             operatorGraph.Graph.EdgeRemoved -= edgeRemovedAction;
             operatorGraph.Graph.VertexAdded -= vertexAddedAction;

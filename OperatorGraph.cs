@@ -75,7 +75,7 @@ public class OperatorGraph
         return from.Multicast(to).Connect();
     }
 
-    public struct GraphNodeMetadata
+    public class GraphNodeMetadata
     {
         public IOperator Operator;
         public Vector2 LayoutOffset;
