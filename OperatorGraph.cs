@@ -1,5 +1,6 @@
 using Godot;
 using QuikGraph;
+using QuikGraph.Algorithms;
 using R3;
 using System;
 using System.Collections.Generic;
@@ -32,9 +33,18 @@ public class OperatorGraph
 
         Graph.EdgeRemoved += (e) =>
         {
+            GD.Print("Edge removed");
             // Find the disposable connection and dispose it
             ObservableEdges[e].Dispose();
             ObservableEdges.Remove(e);
+        };
+
+        Graph.VertexRemoved += (v) =>
+        {
+            //IEnumerable<Edge<GraphNodeMetadata>> outEdges;
+            //Graph.TryGetOutEdges(v, out outEdges);
+
+            //GD.Print(outEdges.Count());
         };
     }
 
@@ -53,7 +63,7 @@ public class OperatorGraph
 
     public void RemoveOperator(IOperator op)
     {
-        Graph.RemoveVertex(new GraphNodeMetadata { Operator = op });
+        Graph.RemoveVertex(Graph.Vertices.Where(x => x.Operator == op).First());
     }
 
     public void ConnectOperators(GraphNodeMetadata from, GraphNodeMetadata to)
