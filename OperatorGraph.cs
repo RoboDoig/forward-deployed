@@ -21,11 +21,12 @@ public class OperatorGraph
         {
             // Create the disposable connection and add to observable edges
             var fromOperator = e.Source.Operator;
+            GD.Print(fromOperator);
             var fromDataSubject = e.Source.Operator.GetType().GetProperty("DataSubject");
             var toInputSubject = e.Target.Operator.GetType().GetProperty("InputSubject");
 
             var connectMethod = GetType().GetMethod("ConnectSubjects").MakeGenericMethod(fromDataSubject.PropertyType.GetGenericArguments());
-            var connect = connectMethod.Invoke(null, [fromDataSubject.GetValue(e.Source), toInputSubject.GetValue(e.Target)]) as IDisposable;
+            var connect = connectMethod.Invoke(null, [fromDataSubject.GetValue(e.Source.Operator), toInputSubject.GetValue(e.Target.Operator)]) as IDisposable;
 
             ObservableEdges.Add(e, connect);
         };
@@ -38,9 +39,11 @@ public class OperatorGraph
         };
     }
 
-    public void AddOperator(IOperator op)
+    public GraphNodeMetadata AddOperator(IOperator op)
     {
+        var node = new GraphNodeMetadata { Operator = op };
         Graph.AddVertex(new GraphNodeMetadata { Operator = op });
+        return node;
     }
 
     public void RemoveOperator(IOperator op)

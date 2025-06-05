@@ -18,12 +18,12 @@ public partial class WorldObjectOperatorMachine : WorldObject
         OperatorGraph = new OperatorGraph();
 
         var outputOperator = new OperatorBooleanSignal();
-        OperatorGraph.AddOperator(outputOperator);
+        var outputNode = OperatorGraph.AddOperator(outputOperator);
 
         var notOperator = new OperatorNot();
-        OperatorGraph.AddOperator(notOperator);
+        var notNode = OperatorGraph.AddOperator(notOperator);
 
-        OperatorGraph.ConnectOperators(notOperator, outputOperator);
+        OperatorGraph.ConnectOperators(notNode, outputNode);
 
         outputOperator.DataSubject.Subscribe(x =>
         {

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using static OperatorGraph;
 
 public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
 {
@@ -17,7 +18,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
     [Export]
     public Button AddNotButton;
 
-    private Dictionary<IOperator, GraphNodeOperator> OperatorMapping;
+    private Dictionary<GraphNodeMetadata, GraphNodeOperator> OperatorMapping;
     private OperatorGraph OperatorGraph;
 
     public override void _Ready()
@@ -48,13 +49,13 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
 
     public void InitialiseGraphEditorFromOperatorGraph(OperatorGraph operatorGraph)
     {
-        OperatorMapping = new Dictionary<IOperator, GraphNodeOperator>();
+        OperatorMapping = new Dictionary<GraphNodeMetadata, GraphNodeOperator>();
         OperatorGraph = operatorGraph;
 
         // Draw existing nodes and edges
         foreach (var vertex in operatorGraph.Graph.Vertices)
         {
-            var graphNode = vertex.CreateGraphNode();
+            var graphNode = vertex.Operator.CreateGraphNode();
 
             OperatorMapping.Add(vertex, graphNode);
 
@@ -89,9 +90,9 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         GraphEdit.DisconnectionRequest += disconnectionRequestHandler;
 
         // Connect graph signals
-        VertexAction<IOperator> vertexAddedAction = (v) =>
+        VertexAction<GraphNodeMetadata> vertexAddedAction = (v) =>
         {
-            var graphNode = v.CreateGraphNode();
+            var graphNode = v.Operator.CreateGraphNode();
             OperatorMapping.Add(v, graphNode);
             GraphEdit.AddChild(graphNode);
         };
@@ -102,13 +103,13 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
 
         };
 
-        EdgeAction<IOperator, Edge<IOperator>> edgeAddedAction = (e) =>
+        EdgeAction<GraphNodeMetadata, Edge<GraphNodeMetadata>> edgeAddedAction = (e) =>
         {
             GraphEdit.ConnectNode(OperatorMapping[e.Source].Name, 0, OperatorMapping[e.Target].Name, 0);
         };
         operatorGraph.Graph.EdgeAdded += edgeAddedAction;
 
-        EdgeAction<IOperator, Edge<IOperator>> edgeRemovedAction = (e) =>
+        EdgeAction<GraphNodeMetadata, Edge<GraphNodeMetadata>> edgeRemovedAction = (e) =>
         {
             GraphEdit.DisconnectNode(OperatorMapping[e.Source].Name, 0, OperatorMapping[e.Target].Name, 0);
         };
