@@ -45,6 +45,12 @@ public class OperatorGraph
         return node;
     }
 
+    public GraphNodeMetadata AddOperator(GraphNodeMetadata node)
+    {
+        Graph.AddVertex(node);
+        return node;
+    }
+
     public void RemoveOperator(IOperator op)
     {
         Graph.RemoveVertex(new GraphNodeMetadata { Operator = op });

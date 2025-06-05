@@ -56,6 +56,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         foreach (var vertex in operatorGraph.Graph.Vertices)
         {
             var graphNode = vertex.Operator.CreateGraphNode();
+            graphNode.PositionOffset = vertex.LayoutOffset;
 
             OperatorMapping.Add(vertex, graphNode);
 

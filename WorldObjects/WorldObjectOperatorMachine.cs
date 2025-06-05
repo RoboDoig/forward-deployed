@@ -18,10 +18,22 @@ public partial class WorldObjectOperatorMachine : WorldObject
         OperatorGraph = new OperatorGraph();
 
         var outputOperator = new OperatorBooleanSignal();
-        var outputNode = OperatorGraph.AddOperator(outputOperator);
+        var outputNode = new OperatorGraph.GraphNodeMetadata
+        {
+            Operator = outputOperator,
+            LayoutOffset = new Vector2(240, 100),
+            Permanent = true
+        };
+        OperatorGraph.AddOperator(outputNode);
 
         var notOperator = new OperatorNot();
-        var notNode = OperatorGraph.AddOperator(notOperator);
+        var notNode = new OperatorGraph.GraphNodeMetadata
+        {
+            Operator = notOperator,
+            LayoutOffset = new Vector2(40, 100),
+            Permanent = false
+        };
+        OperatorGraph.AddOperator(notNode);
 
         OperatorGraph.ConnectOperators(notNode, outputNode);
 
