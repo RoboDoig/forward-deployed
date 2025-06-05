@@ -33,7 +33,6 @@ public class OperatorGraph
 
         Graph.EdgeRemoved += (e) =>
         {
-            GD.Print("Edge removed");
             // Find the disposable connection and dispose it
             ObservableEdges[e].Dispose();
             ObservableEdges.Remove(e);
@@ -41,10 +40,7 @@ public class OperatorGraph
 
         Graph.VertexRemoved += (v) =>
         {
-            //IEnumerable<Edge<GraphNodeMetadata>> outEdges;
-            //Graph.TryGetOutEdges(v, out outEdges);
 
-            //GD.Print(outEdges.Count());
         };
     }
 
