@@ -21,7 +21,6 @@ public class OperatorGraph
         {
             // Create the disposable connection and add to observable edges
             var fromOperator = e.Source.Operator;
-            GD.Print(fromOperator);
             var fromDataSubject = e.Source.Operator.GetType().GetProperty("DataSubject");
             var toInputSubject = e.Target.Operator.GetType().GetProperty("InputSubject");
 
