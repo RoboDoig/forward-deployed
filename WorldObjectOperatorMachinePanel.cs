@@ -20,6 +20,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
 
     private Dictionary<GraphNodeMetadata, GraphNodeOperator> OperatorMapping;
     private OperatorGraph OperatorGraph;
+    private GraphNodeOperator CurrentSelected;
 
     public override void _Ready()
     {
@@ -90,6 +91,24 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         };
         GraphEdit.DisconnectionRequest += disconnectionRequestHandler;
 
+        Godot.GraphEdit.NodeSelectedEventHandler nodeSelectedAction = (n) =>
+        {
+            var selectedNode = (GraphNodeOperator)n;
+            CurrentSelected = selectedNode;
+            GD.Print(CurrentSelected);
+        };
+        GraphEdit.NodeSelected += nodeSelectedAction;
+
+        Action moveNodeFinishedAction = () => {
+            GD.Print("move finished");
+            if (CurrentSelected != null)
+            {
+                var selectedOperator = OperatorMapping.Where(kvp => kvp.Value == CurrentSelected).First().Key;
+                selectedOperator.LayoutOffset = CurrentSelected.PositionOffset;
+            }
+        };
+        GraphEdit.EndNodeMove += moveNodeFinishedAction;
+
         // Connect graph signals
         VertexAction<GraphNodeMetadata> vertexAddedAction = (v) =>
         {
@@ -121,6 +140,8 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         {
             GraphEdit.ConnectionRequest -= connectionRequestHandler;
             GraphEdit.DisconnectionRequest -= disconnectionRequestHandler;
+            GraphEdit.NodeSelected -= nodeSelectedAction;
+            GraphEdit.EndNodeMove -= moveNodeFinishedAction;
             operatorGraph.Graph.EdgeAdded -= edgeAddedAction;
             operatorGraph.Graph.EdgeRemoved -= edgeRemovedAction;
             operatorGraph.Graph.VertexAdded -= vertexAddedAction;
