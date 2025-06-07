@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 public abstract class Operator
 {
-
+    public abstract GraphNodeOperator CreateGraphNode();
 }
 
-public class Operator<TSource, TResult> : IOperator
+public class ObservableOperator<TSource, TResult> : Operator
 {
     public Subject<TSource> InputSubject { get; protected set; }
     public ConnectableObservable<TResult> DataSubject { get; protected set; }
 
-    public Operator()
+    public ObservableOperator()
     {
         InputSubject = CreateInputSubject();
         DataSubject = CreateDataObservable().Publish();
@@ -47,7 +47,7 @@ public class Operator<TSource, TResult> : IOperator
         return typeof(TResult);
     }
 
-    public virtual GraphNodeOperator CreateGraphNode()
+    public override GraphNodeOperator CreateGraphNode()
     {
         PackedScene graphNodeScene = ResourceLoader.Load<PackedScene>("res://graph_node.tscn");
         GraphNodeOperator graphNodeOperator = (GraphNodeOperator)graphNodeScene.Instantiate();

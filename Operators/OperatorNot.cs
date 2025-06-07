@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class OperatorNot : Operator<bool, bool>
+public class OperatorNot : ObservableOperator<bool, bool>
 {
     public override string GetOperatorName()
     {

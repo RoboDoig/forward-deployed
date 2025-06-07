@@ -60,7 +60,7 @@ public partial class WorldObjectOperatorMachine : WorldObject
         return panel;
     }
 
-    public class OperatorBooleanSignal : Operator<bool, bool>
+    public class OperatorBooleanSignal : ObservableOperator<bool, bool>
     {
         public override string GetOperatorName()
         {

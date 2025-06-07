@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class OperatorIntegerIsEven : Operator<int, bool>
+public class OperatorIntegerIsEven : ObservableOperator<int, bool>
 {
     public override string GetOperatorName()
     {
