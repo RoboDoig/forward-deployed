@@ -1,4 +1,4 @@
-[gd_scene load_steps=216 format=4 uid="uid://b7ehtybjhij05"]
+[gd_scene load_steps=218 format=4 uid="uid://b7ehtybjhij05"]
 
 [ext_resource type="Texture2D" uid="uid://b5s18hea4uk45" path="res://Scenes/black-mesa_GENERIC028.png" id="1_j4lsa"]
 [ext_resource type="Texture2D" uid="uid://c5kr3rdsy3jie" path="res://Scenes/black-mesa_BABTECH_CEIL01.png" id="2_nixu4"]
@@ -107,6 +107,7 @@
 [ext_resource type="Texture2D" uid="uid://dr1v0pef3mudr" path="res://crosshair.png" id="104_wc0lh"]
 [ext_resource type="Script" uid="uid://u06kj2sgmoln" path="res://UiManager.cs" id="105_dofba"]
 [ext_resource type="Script" uid="uid://csmns5hcy2yq8" path="res://WorldObjects/WorldObjectOperatorMachine.cs" id="105_i7jma"]
+[ext_resource type="Script" uid="uid://c28egfa04aq0x" path="res://WorldObjects/WorldObjectContainer.cs" id="106_i7jma"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lij5"]
 resource_name = "GENERIC028"
@@ -2977,6 +2978,9 @@ size = Vector3(0.398155, 0.361104, 0.384743)
 [sub_resource type="BoxShape3D" id="BoxShape3D_dofba"]
 size = Vector3(2.21679, 2.70439, 0.742121)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_i7jma"]
+size = Vector3(2.03467, 2.565, 0.961182)
+
 [node name="Sandbox" type="Node3D"]
 
 [node name="black-mesa" type="Node3D" parent="."]
@@ -3038,6 +3042,18 @@ shape = SubResource("BoxShape3D_dofba")
 [node name="OmniLight3D" type="OmniLight3D" parent="Managers/OperatorMachine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22, 0.545, 0.525)
 light_color = Color(0.973524, 8.66354e-07, 0.553472, 1)
+
+[node name="Container" type="Node3D" parent="Managers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2584, -2.72969, -3.94682)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Managers/Container"]
+script = ExtResource("106_i7jma")
+ObjectName = "Container"
+Description = "It contains things."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Managers/Container/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.106689, -0.536285, -0.012085)
+shape = SubResource("BoxShape3D_i7jma")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Managers" node_paths=PackedStringArray("Crosshair")]
 script = ExtResource("105_dofba")
