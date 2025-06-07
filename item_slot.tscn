@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlckkf5elvek2"]
+
+[ext_resource type="Texture2D" uid="uid://c3x77v4d3btey" path="res://icon.svg" id="1_0myub"]
+[ext_resource type="FontFile" uid="uid://ci2y318j7yn78" path="res://Tektur-Regular.ttf" id="2_i83bl"]
+
+[node name="ItemSlot" type="PanelContainer"]
+custom_minimum_size = Vector2(128, 128)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_0myub")
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_i83bl")
+text = "Operator"
+horizontal_alignment = 1
+vertical_alignment = 1
