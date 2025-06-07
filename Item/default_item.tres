@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://d2dvjes547f2n"]
+
+[ext_resource type="Script" uid="uid://3acc7y7ucgh" path="res://Item/ItemData.cs" id="1_32k58"]
+
+[resource]
+script = ExtResource("1_32k58")
+Name = ""
+Description = ""
+Stackable = false
+metadata/_custom_type_script = "uid://3acc7y7ucgh"
