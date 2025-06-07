@@ -48,12 +48,12 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         AddNotButton.Pressed += notPressedHandler;
     }
 
-    public void CreateGraphEditNode(OperatorGraph operatorGraph, GraphNodeMetadata graphNodeMetadata)
+    public void CreateGraphEditNode(GraphNodeMetadata graphNodeMetadata)
     {
         var graphNode = graphNodeMetadata.Operator.CreateGraphNode();
         Action graphNodeClosedAction = () =>
         {
-            operatorGraph.RemoveOperator(graphNodeMetadata.Operator);
+            OperatorGraph.RemoveOperator(graphNodeMetadata.Operator);
         };
         graphNode.CloseButton.Pressed += graphNodeClosedAction;
         graphNode.TreeExited += () => graphNode.CloseButton.Pressed -= graphNodeClosedAction;
@@ -71,7 +71,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         // Draw existing nodes and edges
         foreach (var vertex in operatorGraph.Graph.Vertices)
         {
-            CreateGraphEditNode(operatorGraph, vertex);
+            CreateGraphEditNode(vertex);
         }
 
         foreach (var edge in operatorGraph.Graph.Edges)
@@ -120,7 +120,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         // Connect graph signals
         VertexAction<GraphNodeMetadata> vertexAddedAction = (v) =>
         {
-            CreateGraphEditNode(operatorGraph, v);
+            CreateGraphEditNode(v);
         };
         operatorGraph.Graph.VertexAdded += vertexAddedAction;
 

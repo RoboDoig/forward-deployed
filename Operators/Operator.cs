@@ -6,6 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+public abstract class Operator
+{
+
+}
+
 public class Operator<TSource, TResult> : IOperator
 {
     public Subject<TSource> InputSubject { get; protected set; }
