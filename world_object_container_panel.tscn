@@ -66,6 +66,7 @@ layout_mode = 2
 
 [node name="GridContainer" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
+columns = 7
 
 [node name="CloseButton" type="Button" parent="Panel/MarginContainer"]
 custom_minimum_size = Vector2(0, 40)

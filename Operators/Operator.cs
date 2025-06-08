@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Operator<TSource, TResult> : IOperator
+public partial class Operator<TSource, TResult> : IOperator
 {
     public Subject<TSource> InputSubject { get; protected set; }
     public ConnectableObservable<TResult> DataSubject { get; protected set; }
