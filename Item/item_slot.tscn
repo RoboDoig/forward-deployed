@@ -21,6 +21,5 @@ texture = ExtResource("1_0myub")
 layout_mode = 2
 theme = ExtResource("2_7v0y0")
 theme_override_fonts/font = ExtResource("2_i83bl")
-text = "Operator"
 horizontal_alignment = 1
 vertical_alignment = 1

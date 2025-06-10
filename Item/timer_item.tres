@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_50y5j")
 Name = "Timer"
-Description = ""
+Description = "An integer timer."
 Stackable = true
 OperatorType = "OperatorIntegerTimer"
 metadata/_custom_type_script = "uid://3acc7y7ucgh"

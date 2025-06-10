@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_32k58")
 Name = "Default"
-Description = ""
+Description = "A default item."
 Stackable = true
 OperatorType = ""
 metadata/_custom_type_script = "uid://3acc7y7ucgh"

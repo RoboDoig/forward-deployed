@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dqxc4j2i0yqs" path="res://WorldObjectContainerPanel.cs" id="1_q2ygq"]
 [ext_resource type="LabelSettings" uid="uid://d0ee7jd8sa4mt" path="res://label_settings.tres" id="2_csy6f"]
-[ext_resource type="PackedScene" uid="uid://dlckkf5elvek2" path="res://item_slot.tscn" id="2_q5ejl"]
+[ext_resource type="PackedScene" uid="uid://dlckkf5elvek2" path="res://Item/item_slot.tscn" id="2_q5ejl"]
 [ext_resource type="FontFile" uid="uid://ci2y318j7yn78" path="res://Tektur-Regular.ttf" id="3_q5ejl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wydpg"]
 bg_color = Color(0, 0, 0, 0.435294)
 
-[node name="WorldObjectContainerPanel" type="Control" node_paths=PackedStringArray("GridContainer", "CloseButton", "Title")]
+[node name="WorldObjectContainerPanel" type="Control" node_paths=PackedStringArray("GridContainer", "GrabbedSlot", "CloseButton", "Title")]
 custom_minimum_size = Vector2(1000, 1000)
 layout_mode = 3
 anchors_preset = 8
@@ -25,6 +25,7 @@ grow_vertical = 2
 script = ExtResource("1_q2ygq")
 GridContainer = NodePath("Panel/MarginContainer/VBoxContainer/PanelContainer/GridContainer")
 ItemSlot = ExtResource("2_q5ejl")
+GrabbedSlot = NodePath("GrabbedSlot")
 CloseButton = NodePath("Panel/MarginContainer/CloseButton")
 Title = NodePath("Panel/MarginContainer/VBoxContainer/Title")
 
@@ -76,3 +77,7 @@ theme_override_colors/font_color = Color(0.8, 0.615686, 0.211765, 1)
 theme_override_fonts/font = ExtResource("3_q5ejl")
 theme_override_font_sizes/font_size = 25
 text = "Close"
+
+[node name="GrabbedSlot" parent="." instance=ExtResource("2_q5ejl")]
+visible = false
+layout_mode = 0
