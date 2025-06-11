@@ -3104,8 +3104,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2584, -2.72969, -3.94682)
 [node name="StaticBody3D" type="StaticBody3D" parent="Managers/Container"]
 script = ExtResource("106_i7jma")
 InventoryData = SubResource("Resource_ec4k0")
-ObjectName = "Container"
-Description = "It contains things."
+ObjectName = "Operator Box"
+Description = "It contains operators."
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Managers/Container/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.106689, -0.536285, -0.012085)

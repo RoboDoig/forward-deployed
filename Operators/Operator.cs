@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// TODO - Note that once this is constructed by Godot the operator will start. We may want more logic for actully starting the data observable when we decide.
 public partial class Operator<TSource, TResult> : OperatorResource
 {
     public Subject<TSource> InputSubject { get; protected set; }
