@@ -10,9 +10,9 @@ public partial class WorldObjectContainer : WorldObject
 
     public override void _Ready()
     {
-        WorldItemContainer = new WorldItemContainer();
-        WorldItemContainer.AddOperatorItem(ItemType.Create<OperatorIntegerTimer>());
-        WorldItemContainer.AddOperatorItem(ItemType.Create<OperatorIntegerTimer>());
+        //WorldItemContainer = new WorldItemContainer();
+        //WorldItemContainer.AddOperatorItem(ItemType.Create<OperatorIntegerTimer>());
+        //WorldItemContainer.AddOperatorItem(ItemType.Create<OperatorIntegerTimer>());
     }
 
     public override WorldObjectPanel CreateInterfacePanel(UiManager uiManager)

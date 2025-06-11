@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class OperatorPrinter : Operator<int, string>
+public partial class OperatorPrinter : Operator<int, string>
 {
     public OperatorPrinter() : base()
     {

@@ -6,7 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Operator<TSource, TResult> : IOperator
+public abstract partial class OperatorBase : Node
+{
+    public abstract GraphNodeOperator CreateGraphNode();
+}
+
+public partial class Operator<TSource, TResult> : OperatorBase
 {
     public Subject<TSource> InputSubject { get; protected set; }
     public ConnectableObservable<TResult> DataSubject { get; protected set; }
@@ -42,7 +47,7 @@ public class Operator<TSource, TResult> : IOperator
         return typeof(TResult);
     }
 
-    public virtual GraphNodeOperator CreateGraphNode()
+    public override GraphNodeOperator CreateGraphNode()
     {
         PackedScene graphNodeScene = ResourceLoader.Load<PackedScene>("res://graph_node.tscn");
         GraphNodeOperator graphNodeOperator = (GraphNodeOperator)graphNodeScene.Instantiate();
