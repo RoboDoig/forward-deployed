@@ -5,10 +5,10 @@ using System;
 public partial class ItemData : Resource
 {
     [Export]
-    public string OperatorType;
+    public OperatorResource Operator;
 
-    public IOperator CreateOperatorFromItem()
-    {
-        return (IOperator)Activator.CreateInstance(Type.GetType(OperatorType)); // TODO - this is going to break... badly.
-    }
+    //public IOperator CreateOperatorFromItem()
+    //{
+    //    return (IOperator)Activator.CreateInstance(Type.GetType(OperatorType)); // TODO - this is going to break... badly.
+    //}
 }

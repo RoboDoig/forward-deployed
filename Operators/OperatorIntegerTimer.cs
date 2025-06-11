@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+[GlobalClass]
 public partial class OperatorIntegerTimer : Operator<Unit, int>
 {
     public override string GetOperatorName()

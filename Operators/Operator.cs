@@ -6,12 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public abstract partial class OperatorBase : Node
-{
-    public abstract GraphNodeOperator CreateGraphNode();
-}
-
-public partial class Operator<TSource, TResult> : OperatorBase
+public partial class Operator<TSource, TResult> : OperatorResource
 {
     public Subject<TSource> InputSubject { get; protected set; }
     public ConnectableObservable<TResult> DataSubject { get; protected set; }

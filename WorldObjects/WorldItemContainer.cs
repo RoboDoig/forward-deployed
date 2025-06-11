@@ -24,10 +24,10 @@ public class WorldItem
 {
     public ItemType OperatorType;
 
-    public IOperator CreateOperatorFromItem()
-    {
-        return (IOperator)Activator.CreateInstance(OperatorType.ComponentType);
-    }
+    //public IOperator CreateOperatorFromItem()
+    //{
+    //    return (IOperator)Activator.CreateInstance(OperatorType.ComponentType);
+    //}
 }
 
 public class ItemType
@@ -39,8 +39,8 @@ public class ItemType
         ComponentType = componentType;
     }
 
-    public static ItemType Create<T>() where T : IOperator
-    {
-        return new ItemType(typeof(T));
-    }
+    //public static ItemType Create<T>() where T : IOperator
+    //{
+    //    return new ItemType(typeof(T));
+    //}
 }
