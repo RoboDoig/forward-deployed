@@ -18,7 +18,7 @@ public partial class Operator<TSource, TResult> : OperatorResource
         DataSubject.Connect();
     }
 
-    public virtual string GetOperatorName()
+    public override string GetOperatorName()
     {
         return "Operator";
     }

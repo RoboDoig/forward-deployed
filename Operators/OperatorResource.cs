@@ -8,4 +8,9 @@ public partial class OperatorResource : Resource
     {
         return null;
     }
+
+    public virtual string GetOperatorName()
+    {
+        return "Default";
+    }
 }

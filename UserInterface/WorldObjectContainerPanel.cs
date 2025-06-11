@@ -9,13 +9,15 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
     [Export]
     public PackedScene ItemSlot { get; set; }
 
-    public void InitialiseContainerPanelFromContainer(WorldItemContainer container)
+    public void InitialiseConteinerPanelFromInventoryData(InventoryData inventoryData)
     {
-        for (int i = 0; i < container.ItemCount; i++)
+        foreach (var slotData in inventoryData.SlotDatas)
         {
-            var slot = ItemSlot.Instantiate();
+            var itemSlot = (ItemSlotPanel)ItemSlot.Instantiate();
 
-            GridContainer.AddChild(slot);
+            itemSlot.SetSlotData(slotData);
+
+            GridContainer.AddChild(itemSlot);
         }
     }
 }
