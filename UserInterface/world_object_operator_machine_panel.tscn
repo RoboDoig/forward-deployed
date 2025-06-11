@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dxn5stpw6ikl7"]
 
-[ext_resource type="Script" uid="uid://bxx7i8vop61bs" path="res://WorldObjectOperatorMachinePanel.cs" id="1_04ubh"]
+[ext_resource type="Script" uid="uid://bxx7i8vop61bs" path="res://UserInterface/WorldObjectOperatorMachinePanel.cs" id="1_04ubh"]
 [ext_resource type="LabelSettings" uid="uid://d0ee7jd8sa4mt" path="res://label_settings.tres" id="2_e4gjw"]
 [ext_resource type="FontFile" uid="uid://ci2y318j7yn78" path="res://Tektur-Regular.ttf" id="3_x6tvv"]
 

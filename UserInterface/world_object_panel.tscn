@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dai25vw8pb6tu"]
 
 [ext_resource type="LabelSettings" uid="uid://d0ee7jd8sa4mt" path="res://label_settings.tres" id="1_ha6g8"]
-[ext_resource type="Script" uid="uid://dnx3qus3lwbnx" path="res://WorldObjectPanel.cs" id="1_sh87s"]
+[ext_resource type="Script" uid="uid://dnx3qus3lwbnx" path="res://UserInterface/WorldObjectPanel.cs" id="1_sh87s"]
 [ext_resource type="FontFile" uid="uid://ci2y318j7yn78" path="res://Tektur-Regular.ttf" id="2_sh87s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wydpg"]

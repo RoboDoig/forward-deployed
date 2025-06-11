@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public partial class WorldObjectOperatorMachine : WorldObject
 {
-    public override PackedScene InterfacePanel => ResourceLoader.Load<PackedScene>("res://world_object_operator_machine_panel.tscn");
+    public override PackedScene InterfacePanel => ResourceLoader.Load<PackedScene>("res://UserInterface/world_object_operator_machine_panel.tscn");
 
     public OperatorGraph OperatorGraph;
 

@@ -9,7 +9,7 @@ public partial class WorldObject : StaticBody3D
     [Export]
     public string Description = "Object description.";
 
-    public virtual PackedScene InterfacePanel => ResourceLoader.Load<PackedScene>("res://world_object_panel.tscn");
+    public virtual PackedScene InterfacePanel => ResourceLoader.Load<PackedScene>("res://UserInterface/world_object_panel.tscn");
 
     public virtual WorldObjectPanel CreateInterfacePanel(UiManager uiManager)
     {
