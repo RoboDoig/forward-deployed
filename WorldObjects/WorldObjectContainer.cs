@@ -19,7 +19,7 @@ public partial class WorldObjectContainer : WorldObject
         var panel = (WorldObjectContainerPanel)InterfacePanel.Instantiate();
         panel.Title.Text = ObjectName;
 
-        panel.InitialiseConteinerPanelFromInventoryData(InventoryData);
+        panel.InitialiseContainerPanelFromInventoryData(InventoryData);
 
         return panel;
     }

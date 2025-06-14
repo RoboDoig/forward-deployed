@@ -18,8 +18,29 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
         GrabbedSlot.Hide();
     }
 
-    public void InitialiseConteinerPanelFromInventoryData(InventoryData inventoryData)
+    public void InitialiseContainerPanelFromInventoryData(InventoryData inventoryData)
     {
+        inventoryData.InventoryUpdated += OnInventoryUpdated;
+        PopulateItemGrid(inventoryData);
+
+        TreeExited += () =>
+        {
+            inventoryData.InventoryUpdated -= OnInventoryUpdated;
+        };
+    }
+
+    private void OnInventoryUpdated(InventoryData inventoryData)
+    {
+        PopulateItemGrid(inventoryData);
+    }
+
+    void PopulateItemGrid(InventoryData inventoryData)
+    {
+        foreach (var child in GridContainer.GetChildren())
+        {
+            child.QueueFree();
+        }
+
         foreach (var slotData in inventoryData.SlotDatas)
         {
             var itemSlot = (ItemSlotPanel)ItemSlot.Instantiate();
@@ -31,8 +52,9 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
                 {
                     GrabbedSlot.SetSlotData(inventoryData.SlotDatas[si]);
                     GrabbedSlot.Show();
-                    GD.Print(slotData.ItemData.Operator.GetOperatorName());
-                } else
+                    inventoryData.RemoveItemAtIndex(si);
+                }
+                else
                 {
                     GrabbedSlot.Hide();
                 }
