@@ -1,4 +1,4 @@
-[gd_scene load_steps=233 format=4 uid="uid://b7ehtybjhij05"]
+[gd_scene load_steps=226 format=4 uid="uid://b7ehtybjhij05"]
 
 [ext_resource type="Texture2D" uid="uid://b5s18hea4uk45" path="res://Scenes/black-mesa_GENERIC028.png" id="1_j4lsa"]
 [ext_resource type="Texture2D" uid="uid://c5kr3rdsy3jie" path="res://Scenes/black-mesa_BABTECH_CEIL01.png" id="2_nixu4"]
@@ -108,10 +108,9 @@
 [ext_resource type="Script" uid="uid://u06kj2sgmoln" path="res://UiManager.cs" id="105_dofba"]
 [ext_resource type="Script" uid="uid://csmns5hcy2yq8" path="res://WorldObjects/WorldObjectOperatorMachine.cs" id="105_i7jma"]
 [ext_resource type="Script" uid="uid://c28egfa04aq0x" path="res://WorldObjects/WorldObjectContainer.cs" id="106_i7jma"]
-[ext_resource type="Script" uid="uid://c1u3t6hcphan3" path="res://Operators/OperatorIntegerTimer.cs" id="107_m51rv"]
-[ext_resource type="Script" uid="uid://cc8tkfpy8uf3" path="res://Inventory/ItemData.cs" id="108_kx2f2"]
+[ext_resource type="Resource" uid="uid://bhibdv6q7e8lj" path="res://Inventory/operator_integer_timer.tres" id="107_kx2f2"]
 [ext_resource type="Script" uid="uid://b22a2siuxoped" path="res://Inventory/SlotData.cs" id="109_5e06j"]
-[ext_resource type="Script" uid="uid://by8hw658s4203" path="res://Operators/OperatorIntegerIsEven.cs" id="110_quljp"]
+[ext_resource type="Resource" uid="uid://nayopjtdepjg" path="res://Inventory/operator_is_even.tres" id="109_yvwri"]
 [ext_resource type="Script" uid="uid://c7afsmuxj680a" path="res://Inventory/InventoryData.cs" id="111_2gqr2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lij5"]
@@ -2983,48 +2982,21 @@ size = Vector3(0.398155, 0.361104, 0.384743)
 [sub_resource type="BoxShape3D" id="BoxShape3D_dofba"]
 size = Vector3(2.21679, 2.70439, 0.742121)
 
-[sub_resource type="Resource" id="Resource_entrt"]
-script = ExtResource("107_m51rv")
-metadata/_custom_type_script = "uid://c1u3t6hcphan3"
-
-[sub_resource type="Resource" id="Resource_m4t0x"]
-script = ExtResource("108_kx2f2")
-Operator = SubResource("Resource_entrt")
-metadata/_custom_type_script = "uid://cc8tkfpy8uf3"
-
 [sub_resource type="Resource" id="Resource_m51rv"]
 script = ExtResource("109_5e06j")
-ItemData = SubResource("Resource_m4t0x")
+ItemData = ExtResource("107_kx2f2")
 Quantity = 1
 metadata/_custom_type_script = "uid://b22a2siuxoped"
-
-[sub_resource type="Resource" id="Resource_kx2f2"]
-script = ExtResource("107_m51rv")
-metadata/_custom_type_script = "uid://c1u3t6hcphan3"
-
-[sub_resource type="Resource" id="Resource_5e06j"]
-script = ExtResource("108_kx2f2")
-Operator = SubResource("Resource_kx2f2")
-metadata/_custom_type_script = "uid://cc8tkfpy8uf3"
 
 [sub_resource type="Resource" id="Resource_quljp"]
 script = ExtResource("109_5e06j")
-ItemData = SubResource("Resource_5e06j")
+ItemData = ExtResource("107_kx2f2")
 Quantity = 1
 metadata/_custom_type_script = "uid://b22a2siuxoped"
 
-[sub_resource type="Resource" id="Resource_lsbdk"]
-script = ExtResource("110_quljp")
-metadata/_custom_type_script = "uid://by8hw658s4203"
-
-[sub_resource type="Resource" id="Resource_q3xdp"]
-script = ExtResource("108_kx2f2")
-Operator = SubResource("Resource_lsbdk")
-metadata/_custom_type_script = "uid://cc8tkfpy8uf3"
-
 [sub_resource type="Resource" id="Resource_2gqr2"]
 script = ExtResource("109_5e06j")
-ItemData = SubResource("Resource_q3xdp")
+ItemData = ExtResource("109_yvwri")
 Quantity = 1
 metadata/_custom_type_script = "uid://b22a2siuxoped"
 

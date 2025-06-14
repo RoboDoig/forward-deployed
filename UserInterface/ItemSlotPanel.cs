@@ -5,6 +5,8 @@ public partial class ItemSlotPanel : PanelContainer
 {
     [Export]
     Label ItemNameLabel;
+    [Export]
+    TextureRect ItemIcon;
     [Signal]
     public delegate void SlotClickedEventHandler(int slotIndex, int buttonIndex);
 
@@ -15,6 +17,7 @@ public partial class ItemSlotPanel : PanelContainer
             //ItemNameLabel.Text = slotData.ItemData.Operator.GetOperatorName();
             ItemNameLabel.Text = "OP";
             TooltipText = slotData.ItemData.Operator.GetOperatorName();
+            ItemIcon.Texture = slotData.ItemData.Icon;
         }        
     }
 
