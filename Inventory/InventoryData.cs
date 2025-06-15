@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 [GlobalClass]
 public partial class InventoryData : Resource
@@ -18,12 +19,14 @@ public partial class InventoryData : Resource
 
         return slot;
     }
-    //public void OnSlotClicked(int si, int bi)
-    //{
-    //    var slotData = SlotDatas[si];
-    //    if (slotData != null )
-    //    {
-    //        GD.Print(slotData.ItemData.Operator.GetOperatorName());
-    //    };
-    //}
+
+    public SlotData DropItemAtIndex(SlotData slotToDrop, int atIndex)
+    {
+        var currentlyAtSlot = SlotDatas[atIndex];
+        SlotDatas[atIndex] = slotToDrop;
+
+        EmitSignal(SignalName.InventoryUpdated, this);
+
+        return currentlyAtSlot;
+    }
 }

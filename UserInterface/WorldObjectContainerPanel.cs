@@ -9,13 +9,39 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
     [Export]
     public PackedScene ItemSlot { get; set; }
 
+    [Signal]
+    private delegate void CurrentHeldSlotChangedEventHandler(SlotData slotData);
+
     private ItemSlotPanel GrabbedSlot;
+    private SlotData CurrentHeldSlot
+    {
+        get; 
+        set
+        {
+            field = value;
+            EmitSignal(SignalName.CurrentHeldSlotChanged, value);
+        }
+    }
 
     public override void _Ready()
     {
         GrabbedSlot = (ItemSlotPanel)ItemSlot.Instantiate();
         AddChild(GrabbedSlot);
         GrabbedSlot.Hide();
+
+        CurrentHeldSlotChanged += OnCurrentHeldSlotChanged;
+    }
+
+    private void OnCurrentHeldSlotChanged(SlotData slotData)
+    {
+        if (slotData != null)
+        {
+            GrabbedSlot.SetSlotData(slotData);
+            GrabbedSlot.Show();
+        } else
+        {
+            GrabbedSlot.Hide();
+        }
     }
 
     public void InitialiseContainerPanelFromInventoryData(InventoryData inventoryData)
@@ -48,19 +74,21 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
 
             itemSlot.SlotClicked += (si, bi) =>
             {
-                if (slotData != null)
-                {
-                    GrabbedSlot.SetSlotData(inventoryData.SlotDatas[si]);
-                    GrabbedSlot.Show();
-                    inventoryData.RemoveItemAtIndex(si);
-                }
-                else
-                {
-                    GrabbedSlot.Hide();
-                }
+                OnSlotClicked(inventoryData, si, bi);
             };
 
             GridContainer.AddChild(itemSlot);
+        }
+    }
+
+    void OnSlotClicked(InventoryData inventoryData, int slotIndex, int buttonIndex)
+    {
+        if (CurrentHeldSlot == null)
+        {
+            CurrentHeldSlot = inventoryData.RemoveItemAtIndex(slotIndex);
+        } else
+        {
+            CurrentHeldSlot = inventoryData.DropItemAtIndex(CurrentHeldSlot, slotIndex);
         }
     }
 
