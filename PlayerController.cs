@@ -48,6 +48,11 @@ public partial class PlayerController : CharacterBody3D
 
     public override void _Input(InputEvent @event)
     {
+        if (LockControls)
+        {
+            return;
+        }
+
         if (@event is InputEventMouseMotion motion)
         {
             cameraChange = motion.Relative;
@@ -100,11 +105,13 @@ public partial class PlayerController : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (!LockControls)
+        if (LockControls)
         {
-            Aim();
-            Velocity = Walk(delta) + Gravity(delta);
+            return;
         }
+
+        Aim();
+        Velocity = Walk(delta) + Gravity(delta);
 
         MoveAndSlide();
     }

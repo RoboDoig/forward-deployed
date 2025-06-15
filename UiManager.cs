@@ -8,31 +8,43 @@ public partial class UiManager : CanvasLayer
 
     [Signal]
     public delegate void RequestReleaseUiControlsEventHandler();
+    [Signal]
+    private delegate void OpenPanelsCountChangedEventHandler();
 
     private bool CanCreatePanels = true;
 
     [Export]
     private TextureRect Crosshair;
 
+    private int OpenPanelsCount
+    {
+        get;
+        set
+        {
+            field = value;
+            EmitSignal(SignalName.OpenPanelsCountChanged);
+
+            if (field > 0)
+            {
+                EmitSignal(SignalName.RequestUiControls);
+            } else
+            {
+                EmitSignal(SignalName.RequestReleaseUiControls);
+            }
+        }
+    } = 0;
+
     public void CreateWorldObjectPanel(WorldObject worldObject)
     {
-        if (CanCreatePanels)
+        var panel = worldObject.CreateInterfacePanel(this);
+        AddChild(panel);
+
+        OpenPanelsCount++;
+
+        panel.CloseInitiated += () =>
         {
-            CanCreatePanels = false;
-            var panel = worldObject.CreateInterfacePanel(this);
-            AddChild(panel);
-
-            EmitSignal(SignalName.RequestUiControls);
-
-            panel.CloseButton.Pressed += () =>
-            {
-                panel.QueueFree();
-
-                EmitSignal(SignalName.RequestReleaseUiControls);
-
-                CanCreatePanels = true;
-            };
-        }
+            OpenPanelsCount--;
+        };
     }
 
     public void SetCrosshairScale(Vector2 scaleVector)

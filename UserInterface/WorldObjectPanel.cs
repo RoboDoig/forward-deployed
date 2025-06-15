@@ -4,10 +4,13 @@ using System;
 public partial class WorldObjectPanel : Control
 {
     [Export]
-    public Button CloseButton { get; private set; }
+    private Button CloseButton { get; set; }
 
     [Export]
     public Label Title { get; private set; }
+
+    [Signal]
+    public delegate void CloseInitiatedEventHandler();
 
     private bool beingMoved;
     private Vector2 moveStartPosition;
@@ -27,6 +30,12 @@ public partial class WorldObjectPanel : Control
                     beingMoved = false;
                 }
             }
+        };
+
+        CloseButton.Pressed += () =>
+        {
+            EmitSignal(SignalName.CloseInitiated);
+            QueueFree();
         };
     }
 
