@@ -29,6 +29,11 @@ public partial class GeneralManager : Node3D
             UiManager.SetCrosshairScale(new Vector2(1, 1));
         };
 
+        PlayerController.InventoryOpenRequest += () =>
+        {
+
+        };
+
         UiManager.RequestUiControls += () =>
         {
             Input.MouseMode = Input.MouseModeEnum.Visible;

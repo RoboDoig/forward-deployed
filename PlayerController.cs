@@ -33,6 +33,9 @@ public partial class PlayerController : CharacterBody3D
     [Signal]
     public delegate void NoWorldObjectHoveredEventHandler(WorldObject worldObject);
 
+    [Signal]
+    public delegate void InventoryOpenRequestEventHandler();
+
     // Walk
     const float gravity = -9.8f * 3;
 
@@ -68,6 +71,11 @@ public partial class PlayerController : CharacterBody3D
                     EmitSignal(SignalName.WorldObjectClicked, hoveredObject);
                 }
             }
+        }
+
+        if (Input.IsActionJustPressed("inventory"))
+        {
+            EmitSignal(SignalName.InventoryOpenRequest);
         }
     }
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=226 format=4 uid="uid://b7ehtybjhij05"]
+[gd_scene load_steps=230 format=4 uid="uid://b7ehtybjhij05"]
 
 [ext_resource type="Texture2D" uid="uid://b5s18hea4uk45" path="res://Scenes/black-mesa_GENERIC028.png" id="1_j4lsa"]
 [ext_resource type="Texture2D" uid="uid://c5kr3rdsy3jie" path="res://Scenes/black-mesa_BABTECH_CEIL01.png" id="2_nixu4"]
@@ -103,6 +103,7 @@
 [ext_resource type="Texture2D" uid="uid://6e5qfimpmnao" path="res://Scenes/black-mesa_C1A1SIGN3.png" id="101_kkhi2"]
 [ext_resource type="Script" uid="uid://b40xokxy3vjco" path="res://PlayerController.cs" id="102_nixu4"]
 [ext_resource type="Script" uid="uid://bgm60iim550qg" path="res://GeneralManager.cs" id="102_wydpg"]
+[ext_resource type="Script" uid="uid://dx2u4aor6gsyn" path="res://ManagerWorldObject.cs" id="103_m51rv"]
 [ext_resource type="Script" uid="uid://ci7kg0s6q8ewg" path="res://WorldObjects/WorldObject.cs" id="103_xxssg"]
 [ext_resource type="Texture2D" uid="uid://dr1v0pef3mudr" path="res://crosshair.png" id="104_wc0lh"]
 [ext_resource type="Script" uid="uid://u06kj2sgmoln" path="res://UiManager.cs" id="105_dofba"]
@@ -2972,6 +2973,23 @@ data = PackedVector3Array(-10.6301, 1.0287, 3.4669, -10.6301, -0.343, 3.5432, -1
 background_mode = 1
 background_color = Color(1, 1, 1, 1)
 
+[sub_resource type="Resource" id="Resource_kx2f2"]
+script = ExtResource("109_5e06j")
+ItemData = ExtResource("107_kx2f2")
+Quantity = 1
+metadata/_custom_type_script = "uid://b22a2siuxoped"
+
+[sub_resource type="Resource" id="Resource_5e06j"]
+script = ExtResource("109_5e06j")
+ItemData = ExtResource("109_yvwri")
+Quantity = 1
+metadata/_custom_type_script = "uid://b22a2siuxoped"
+
+[sub_resource type="Resource" id="Resource_entrt"]
+script = ExtResource("111_2gqr2")
+SlotDatas = Array[Object]([SubResource("Resource_kx2f2"), SubResource("Resource_5e06j")])
+metadata/_custom_type_script = "uid://c7afsmuxj680a"
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j4lsa"]
 radius = 0.293202
 height = 1.51999
@@ -3028,6 +3046,12 @@ environment = SubResource("Environment_j4lsa")
 
 [node name="Managers" type="Node3D" parent="."]
 script = ExtResource("102_wydpg")
+
+[node name="ManagerWorldObject" type="StaticBody3D" parent="Managers"]
+script = ExtResource("103_m51rv")
+InventoryData = SubResource("Resource_entrt")
+ObjectName = "Manager"
+Description = "Dummy world object for the game manager. Intended to contain things like the player inventory"
 
 [node name="Player" type="CharacterBody3D" parent="Managers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5784, -3.68815, -5.30589)
