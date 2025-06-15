@@ -25,6 +25,8 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
 
     public override void _Ready()
     {
+        base._Ready();
+
         GrabbedSlot = (ItemSlotPanel)ItemSlot.Instantiate();
         AddChild(GrabbedSlot);
         GrabbedSlot.Hide();
@@ -94,6 +96,7 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
 
     public override void _PhysicsProcess(double delta)
     {
+        base._PhysicsProcess(delta);
         if (GrabbedSlot.Visible)
         {
             GrabbedSlot.SetGlobalPosition(GetGlobalMousePosition() + new Vector2(5, 5));

@@ -23,7 +23,7 @@ public partial class ItemSlotPanel : PanelContainer
 
     public override void _GuiInput(InputEvent @event)
     {
-        if (@event is InputEventMouseButton && @event.IsPressed())
+        if (@event is InputEventMouseButton inputEventMouseButton && @event.IsPressed() && inputEventMouseButton.ButtonIndex == MouseButton.Left)
         {
             var buttonEvent = (InputEventMouseButton)@event;
             EmitSignal(SignalName.SlotClicked, GetIndex(), (int)buttonEvent.ButtonIndex);
