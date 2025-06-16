@@ -49,12 +49,13 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
 
     public void InitialiseContainerPanelFromInventoryData(InventoryData inventoryData)
     {
-        inventoryData.InventoryUpdated += OnInventoryUpdated;
+        InventoryData = inventoryData;
+        InventoryData.InventoryUpdated += OnInventoryUpdated;
         PopulateItemGrid(inventoryData);
 
         TreeExited += () =>
         {
-            inventoryData.InventoryUpdated -= OnInventoryUpdated;
+            InventoryData.InventoryUpdated -= OnInventoryUpdated;
         };
     }
 
@@ -75,26 +76,25 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
             var itemSlot = (ItemSlotPanel)ItemSlot.Instantiate();
             itemSlot.SetSlotData(slotData);
 
-            itemSlot.SlotClicked += (si, bi) =>
-            {
-                OnSlotClicked(inventoryData, si, bi);
-            };
+            //itemSlot.SlotClicked += (si, bi) =>
+            //{
+            //    OnSlotClicked(inventoryData, si, bi);
+            //};
 
             GridContainer.AddChild(itemSlot);
         }
     }
 
-    void OnSlotClicked(InventoryData inventoryData, int slotIndex, int buttonIndex)
-    {
-        GD.Print(inventoryData, slotIndex, buttonIndex);
-        if (CurrentHeldSlot == null)
-        {
-            CurrentHeldSlot = inventoryData.RemoveItemAtIndex(slotIndex);
-        } else
-        {
-            CurrentHeldSlot = inventoryData.DropItemAtIndex(CurrentHeldSlot, slotIndex);
-        }
-    }
+    //void OnSlotClicked(int slotIndex, int buttonIndex)
+    //{
+    //    if (CurrentHeldSlot == null)
+    //    {
+    //        CurrentHeldSlot = InventoryData.RemoveItemAtIndex(slotIndex);
+    //    } else
+    //    {
+    //        CurrentHeldSlot = InventoryData.DropItemAtIndex(CurrentHeldSlot, slotIndex);
+    //    }
+    //}
 
     public override void _PhysicsProcess(double delta)
     {

@@ -64,16 +64,16 @@ public partial class UiManager : CanvasLayer
 public partial class MultiContainerManager : Node3D
 {
     [Signal]
-    private delegate void CurrentHeldSlotChangedEventHandler(SlotData slotData);
+    private delegate void CurrentHeldSlotChangedEventHandler(InventoryData inventoryData, SlotData slotData);
     private List<WorldObjectContainerPanel> ContainerPanels;
     private ItemSlotPanel GrabbedSlot;
-    private SlotData CurrentHeldSlot
+    private Tuple<InventoryData, SlotData> CurrentHeldSlot
     {
         get;
         set
         {
             field = value;
-            EmitSignal(SignalName.CurrentHeldSlotChanged, value);
+            EmitSignal(SignalName.CurrentHeldSlotChanged, value.Item1, value.Item2);
         }
     }
 
@@ -86,7 +86,13 @@ public partial class MultiContainerManager : Node3D
             var itemSlot = (ItemSlotPanel)slot;
             itemSlot.SlotClicked += (si, bi) =>
             {
-
+                if (CurrentHeldSlot ==  null)
+                {
+                    CurrentHeldSlot = panel.InventoryData.RemoveItemAtIndex(si);
+                } else
+                {
+                    CurrentHeldSlot = panel.InventoryData.DropItemAtIndex(CurrentHeldSlot.Item2, si);
+                }
             };
         }
     }
