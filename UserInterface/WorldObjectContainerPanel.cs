@@ -12,6 +12,7 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
     [Signal]
     private delegate void CurrentHeldSlotChangedEventHandler(SlotData slotData);
 
+    public InventoryData InventoryData { get; private set; }
     private ItemSlotPanel GrabbedSlot;
     private SlotData CurrentHeldSlot
     {

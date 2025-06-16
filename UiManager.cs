@@ -80,6 +80,15 @@ public partial class MultiContainerManager : Node3D
     public void AddContainerPanel(WorldObjectContainerPanel panel)
     {
         ContainerPanels.Add(panel);
+
+        foreach (var slot in panel.GridContainer.GetChildren())
+        {
+            var itemSlot = (ItemSlotPanel)slot;
+            itemSlot.SlotClicked += (si, bi) =>
+            {
+
+            };
+        }
     }
 
     public void RemoveContainerPanel(WorldObjectContainerPanel panel)
