@@ -17,8 +17,6 @@ public partial class UiManager : CanvasLayer
     [Export]
     private TextureRect Crosshair;
 
-    private MultiContainerManager MultiContainerManager = new MultiContainerManager();
-
     private int OpenPanelsCount
     {
         get;
@@ -42,11 +40,6 @@ public partial class UiManager : CanvasLayer
         var panel = worldObject.CreateInterfacePanel(this);
         AddChild(panel);
 
-        if (panel.GetType().IsSubclassOf(typeof(WorldObjectContainerPanel)))
-        {
-            MultiContainerManager.AddContainerPanel((WorldObjectContainerPanel)panel);
-        }
-
         OpenPanelsCount++;
 
         panel.CloseInitiated += () =>
@@ -58,32 +51,5 @@ public partial class UiManager : CanvasLayer
     public void SetCrosshairScale(Vector2 scaleVector)
     {
         Crosshair.Scale = scaleVector;
-    }
-}
-
-public partial class MultiContainerManager : Node3D
-{
-    [Signal]
-    private delegate void CurrentHeldSlotChangedEventHandler(SlotData slotData);
-    private List<WorldObjectContainerPanel> ContainerPanels;
-    private ItemSlotPanel GrabbedSlot;
-    private SlotData CurrentHeldSlot
-    {
-        get;
-        set
-        {
-            field = value;
-            EmitSignal(SignalName.CurrentHeldSlotChanged, value);
-        }
-    }
-
-    public void AddContainerPanel(WorldObjectContainerPanel panel)
-    {
-        ContainerPanels.Add(panel);
-    }
-
-    public void RemoveContainerPanel(WorldObjectContainerPanel panel)
-    {
-        ContainerPanels.Remove(panel);
     }
 }

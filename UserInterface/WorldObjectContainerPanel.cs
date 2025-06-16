@@ -85,7 +85,6 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
 
     void OnSlotClicked(InventoryData inventoryData, int slotIndex, int buttonIndex)
     {
-        GD.Print(inventoryData, slotIndex, buttonIndex);
         if (CurrentHeldSlot == null)
         {
             CurrentHeldSlot = inventoryData.RemoveItemAtIndex(slotIndex);
