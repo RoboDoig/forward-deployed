@@ -4,15 +4,16 @@ using System;
 // TODO: Stupidly named for now, just testing stuff out
 public partial class GeneralManager : Node3D
 {
+    [Export]
     private UiManager UiManager;
+    [Export]
     private PlayerController PlayerController;
+    [Export]
+    private ManagerWorldObject ManagerWorldObject;
 
     public override void _Ready()
     {
         base._Ready();
-
-        UiManager = GetNode<UiManager>("CanvasLayer");
-        PlayerController = GetNode<PlayerController>("Player");
 
         PlayerController.WorldObjectClicked += (worldObject) =>
         {
@@ -31,7 +32,7 @@ public partial class GeneralManager : Node3D
 
         PlayerController.InventoryOpenRequest += () =>
         {
-
+            UiManager.CreateWorldObjectPanel(ManagerWorldObject);
         };
 
         UiManager.RequestUiControls += () =>

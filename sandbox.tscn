@@ -2987,7 +2987,7 @@ metadata/_custom_type_script = "uid://b22a2siuxoped"
 
 [sub_resource type="Resource" id="Resource_entrt"]
 script = ExtResource("111_2gqr2")
-SlotDatas = Array[Object]([SubResource("Resource_kx2f2"), SubResource("Resource_5e06j")])
+SlotDatas = Array[Object]([SubResource("Resource_kx2f2"), SubResource("Resource_5e06j"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 metadata/_custom_type_script = "uid://c7afsmuxj680a"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j4lsa"]
@@ -3044,13 +3044,16 @@ debug_fill = false
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_j4lsa")
 
-[node name="Managers" type="Node3D" parent="."]
+[node name="Managers" type="Node3D" parent="." node_paths=PackedStringArray("UiManager", "PlayerController", "ManagerWorldObject")]
 script = ExtResource("102_wydpg")
+UiManager = NodePath("CanvasLayer")
+PlayerController = NodePath("Player")
+ManagerWorldObject = NodePath("ManagerWorldObject")
 
 [node name="ManagerWorldObject" type="StaticBody3D" parent="Managers"]
 script = ExtResource("103_m51rv")
 InventoryData = SubResource("Resource_entrt")
-ObjectName = "Manager"
+ObjectName = "Inventory"
 Description = "Dummy world object for the game manager. Intended to contain things like the player inventory"
 
 [node name="Player" type="CharacterBody3D" parent="Managers"]

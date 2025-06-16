@@ -51,6 +51,12 @@ public partial class PlayerController : CharacterBody3D
 
     public override void _Input(InputEvent @event)
     {
+        LockableControls(@event);
+        PermanentControls(@event);
+    }
+
+    void LockableControls(InputEvent @event)
+    {
         if (LockControls)
         {
             return;
@@ -72,7 +78,10 @@ public partial class PlayerController : CharacterBody3D
                 }
             }
         }
+    }
 
+    void PermanentControls(InputEvent @event)
+    {
         if (Input.IsActionJustPressed("inventory"))
         {
             EmitSignal(SignalName.InventoryOpenRequest);
