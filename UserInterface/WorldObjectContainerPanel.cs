@@ -11,39 +11,10 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
     [Signal]
     public delegate void SlotClickedEventHandler(InventoryData inventoryData, int slotIndex, int buttonIndex);
 
-    //private ItemSlotPanel GrabbedSlot;
-    //private SlotData CurrentHeldSlot
-    //{
-    //    get; 
-    //    set
-    //    {
-    //        field = value;
-    //        EmitSignal(SignalName.CurrentHeldSlotChanged, value);
-    //    }
-    //}
-
     public override void _Ready()
     {
         base._Ready();
-
-        //GrabbedSlot = (ItemSlotPanel)ItemSlot.Instantiate();
-        //AddChild(GrabbedSlot);
-        //GrabbedSlot.Hide();
-
-        //CurrentHeldSlotChanged += OnCurrentHeldSlotChanged;
     }
-
-    //private void OnCurrentHeldSlotChanged(SlotData slotData)
-    //{
-    //    if (slotData != null)
-    //    {
-    //        GrabbedSlot.SetSlotData(slotData);
-    //        GrabbedSlot.Show();
-    //    } else
-    //    {
-    //        GrabbedSlot.Hide();
-    //    }
-    //}
 
     public void InitialiseContainerPanelFromInventoryData(InventoryData inventoryData)
     {
@@ -81,24 +52,4 @@ public partial class WorldObjectContainerPanel : WorldObjectPanel
             GridContainer.AddChild(itemSlot);
         }
     }
-
-    //void OnSlotClicked(InventoryData inventoryData, int slotIndex, int buttonIndex)
-    //{
-    //    if (CurrentHeldSlot == null)
-    //    {
-    //        CurrentHeldSlot = inventoryData.RemoveItemAtIndex(slotIndex);
-    //    } else
-    //    {
-    //        CurrentHeldSlot = inventoryData.DropItemAtIndex(CurrentHeldSlot, slotIndex);
-    //    }
-    //}
-
-    //public override void _PhysicsProcess(double delta)
-    //{
-    //    base._PhysicsProcess(delta);
-    //    if (GrabbedSlot.Visible)
-    //    {
-    //        GrabbedSlot.SetGlobalPosition(GetGlobalMousePosition() + new Vector2(5, 5));
-    //    }
-    //}
 }
