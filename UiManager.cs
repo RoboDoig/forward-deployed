@@ -64,7 +64,6 @@ public partial class UiManager : CanvasLayer
 
         if (panel.GetType().IsSubclassOf(typeof(WorldObjectContainerPanel)) || panel.GetType() == typeof(WorldObjectContainerPanel))
         {
-            GD.Print("adding panel");
             MultiContainerManager.AddContainerPanel((WorldObjectContainerPanel)panel);
         }
     }
