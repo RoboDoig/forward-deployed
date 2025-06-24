@@ -18,6 +18,9 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
     [Export]
     public Button AddNotButton;
 
+    [Signal]
+    public delegate void GridClickedEventHandler(int buttonIndex);
+
     private Dictionary<GraphNodeMetadata, GraphNodeOperator> OperatorMapping;
     private OperatorGraph OperatorGraph;
     private GraphNodeOperator CurrentSelected;
@@ -46,6 +49,12 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
             OperatorGraph.AddOperator(not);
         };
         AddNotButton.Pressed += notPressedHandler;
+    }
+
+    public void AddOperator(SlotData slotData)
+    {
+        // TODO - account for amounts in slotdata
+        OperatorGraph.AddOperator(slotData.ItemData.Operator);
     }
 
     public void CreateGraphEditNode(GraphNodeMetadata graphNodeMetadata)
@@ -153,5 +162,14 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
             operatorGraph.Graph.EdgeRemoved -= edgeRemovedAction;
             operatorGraph.Graph.VertexAdded -= vertexAddedAction;
         };
+    }
+
+    public override void _GuiInput(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton inputEventMouseButton && @event.IsPressed() && inputEventMouseButton.ButtonIndex == MouseButton.Left)
+        {
+            var buttonEvent = (InputEventMouseButton)@event;
+            EmitSignal(SignalName.GridClicked, (int)buttonEvent.ButtonIndex);
+        }
     }
 }

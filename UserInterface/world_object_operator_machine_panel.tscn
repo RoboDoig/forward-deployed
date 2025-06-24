@@ -36,6 +36,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_wydpg")
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
@@ -84,6 +85,7 @@ text = "NOT"
 [node name="GraphEdit" type="GraphEdit" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
 right_disconnects = true
 
 [node name="CloseButton" type="Button" parent="Panel/MarginContainer"]

@@ -20,27 +20,30 @@ public partial class UiManager : CanvasLayer
     [Export]
     public PackedScene ItemSlot { get; set; }
     private ItemSlotPanel GrabbedSlot;
-    private MultiContainerManager MultiContainerManager;
+    private MultiItemInteractionManager MultiItemInteractionManager;
 
     public override void _Ready()
     {
+        OpenPanelsCount = 0;
+
         GrabbedSlot = (ItemSlotPanel)ItemSlot.Instantiate();
         AddChild(GrabbedSlot);
         GrabbedSlot.Hide();
 
-        MultiContainerManager = new MultiContainerManager(GrabbedSlot);
-        AddChild(MultiContainerManager);
+        MultiItemInteractionManager = new MultiItemInteractionManager(GrabbedSlot);
+        AddChild(MultiItemInteractionManager);
     }
 
+    private int openPanelsCount;
     private int OpenPanelsCount
     {
-        get;
+        get { return openPanelsCount;}
         set
         {
-            field = value;
+            openPanelsCount = value;
             EmitSignal(SignalName.OpenPanelsCountChanged);
 
-            if (field > 0)
+            if (openPanelsCount > 0)
             {
                 EmitSignal(SignalName.RequestUiControls);
             } else
@@ -48,7 +51,7 @@ public partial class UiManager : CanvasLayer
                 EmitSignal(SignalName.RequestReleaseUiControls);
             }
         }
-    } = 0;
+    }
 
     public void CreateWorldObjectPanel(WorldObject worldObject)
     {
@@ -64,7 +67,20 @@ public partial class UiManager : CanvasLayer
 
         if (panel.GetType().IsSubclassOf(typeof(WorldObjectContainerPanel)) || panel.GetType() == typeof(WorldObjectContainerPanel))
         {
-            MultiContainerManager.AddContainerPanel((WorldObjectContainerPanel)panel);
+            //MultiContainerManager.AddContainerPanel((WorldObjectContainerPanel)panel);
+            var containerPanel = (WorldObjectContainerPanel)panel;
+
+            //containerPanel.SlotClicked += (iv, si, bi) => { GD.Print("Clicked an inventory slot."); };
+
+            MultiItemInteractionManager.AddContainerPanel(containerPanel);
+        }
+
+        if (panel.GetType().IsSubclassOf(typeof(WorldObjectOperatorMachinePanel)) || panel.GetType() == typeof(WorldObjectOperatorMachinePanel))
+        {
+            var operatorMachinePanel = (WorldObjectOperatorMachinePanel)panel;
+
+            //operatorMachinePanel.GridClicked += (bi) => { GD.Print("Clicked an operator grid"); };
+            MultiItemInteractionManager.AddOperatorMachinePanel(operatorMachinePanel);
         }
     }
 
@@ -74,17 +90,89 @@ public partial class UiManager : CanvasLayer
     }
 }
 
-public partial class MultiContainerManager : Control
+public partial class MultiItemInteractionManager : Control
 {
-    private Tuple<InventoryData, SlotData> CurrentHeldItem
+    private SlotData currentHeldItem;
+    private SlotData CurrentHeldItem
     {
-        get;
+        get { return currentHeldItem; }
         set
         {
-            field = value;
+            currentHeldItem = value;
+            EmitSignal(SignalName.CurrentHeldItemChanged, value);
+        }
+    }
+    private ItemSlotPanel ItemDisplaySlot;
+    [Signal]
+    private delegate void CurrentHeldItemChangedEventHandler(SlotData slotData);
+
+    public MultiItemInteractionManager(ItemSlotPanel displaySlot)
+    {
+        ItemDisplaySlot = displaySlot;
+
+        CurrentHeldItemChanged += OnCurrentHeldItemChanged;
+    }
+
+    void OnCurrentHeldItemChanged(SlotData slotData)
+    {
+        if (slotData != null)
+        {
+            ItemDisplaySlot.SetSlotData(slotData);
+            ItemDisplaySlot.Show();
+            ItemDisplaySlot.ZIndex = 1;
+        }
+        else
+        {
+            ItemDisplaySlot.Hide();
+        }
+    }
+
+    public void AddContainerPanel(WorldObjectContainerPanel container)
+    {
+        container.SlotClicked += (inv, si, bi) =>
+        {
+            if (CurrentHeldItem == null)
+            {
+                CurrentHeldItem = inv.RemoveItemAtIndex(si);
+            } else
+            {
+                CurrentHeldItem = inv.DropItemAtIndex(CurrentHeldItem, si);
+            }
+        };
+    }
+
+    public void AddOperatorMachinePanel(WorldObjectOperatorMachinePanel machine)
+    {
+        machine.GridClicked += (bi) =>
+        {
+            if (CurrentHeldItem != null)
+            {
+                machine.AddOperator(CurrentHeldItem);
+            }
+        };
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        if (ItemDisplaySlot.Visible)
+        {
+            ItemDisplaySlot.SetGlobalPosition(GetGlobalMousePosition() + new Vector2(5, 5));
+        }
+    }
+}
+
+public partial class MultiContainerManager : Control
+{
+    private Tuple<InventoryData, SlotData> currentHeldItem;
+    private Tuple<InventoryData, SlotData> CurrentHeldItem
+    {
+        get { return currentHeldItem; }
+        set
+        {
+            currentHeldItem = value;
             EmitSignal(SignalName.CurrentHeldItemChanged, value.Item2);
         }
-    } = null;
+    }
     private ItemSlotPanel ItemDisplaySlot;
     [Signal]
     private delegate void CurrentHeldItemChangedEventHandler(SlotData slotData);
