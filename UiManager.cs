@@ -34,24 +34,24 @@ public partial class UiManager : CanvasLayer
         AddChild(MultiItemInteractionManager);
     }
 
-    private int openPanelsCount;
     private int OpenPanelsCount
     {
-        get { return openPanelsCount;}
+        get;
         set
         {
-            openPanelsCount = value;
+            field = value;
             EmitSignal(SignalName.OpenPanelsCountChanged);
 
-            if (openPanelsCount > 0)
+            if (field > 0)
             {
                 EmitSignal(SignalName.RequestUiControls);
-            } else
+            }
+            else
             {
                 EmitSignal(SignalName.RequestReleaseUiControls);
             }
         }
-    }
+    } = 0;
 
     public void CreateWorldObjectPanel(WorldObject worldObject)
     {
@@ -67,19 +67,13 @@ public partial class UiManager : CanvasLayer
 
         if (panel.GetType().IsSubclassOf(typeof(WorldObjectContainerPanel)) || panel.GetType() == typeof(WorldObjectContainerPanel))
         {
-            //MultiContainerManager.AddContainerPanel((WorldObjectContainerPanel)panel);
             var containerPanel = (WorldObjectContainerPanel)panel;
-
-            //containerPanel.SlotClicked += (iv, si, bi) => { GD.Print("Clicked an inventory slot."); };
-
             MultiItemInteractionManager.AddContainerPanel(containerPanel);
         }
 
         if (panel.GetType().IsSubclassOf(typeof(WorldObjectOperatorMachinePanel)) || panel.GetType() == typeof(WorldObjectOperatorMachinePanel))
         {
             var operatorMachinePanel = (WorldObjectOperatorMachinePanel)panel;
-
-            //operatorMachinePanel.GridClicked += (bi) => { GD.Print("Clicked an operator grid"); };
             MultiItemInteractionManager.AddOperatorMachinePanel(operatorMachinePanel);
         }
     }
@@ -92,16 +86,15 @@ public partial class UiManager : CanvasLayer
 
 public partial class MultiItemInteractionManager : Control
 {
-    private SlotData currentHeldItem;
     private SlotData CurrentHeldItem
     {
-        get { return currentHeldItem; }
+        get;
         set
         {
-            currentHeldItem = value;
+            field = value;
             EmitSignal(SignalName.CurrentHeldItemChanged, value);
         }
-    }
+    } = null;
     private ItemSlotPanel ItemDisplaySlot;
     [Signal]
     private delegate void CurrentHeldItemChangedEventHandler(SlotData slotData);
@@ -148,71 +141,9 @@ public partial class MultiItemInteractionManager : Control
             if (CurrentHeldItem != null)
             {
                 machine.AddOperator(CurrentHeldItem);
+                CurrentHeldItem = null;
             }
         };
-    }
-
-    public override void _PhysicsProcess(double delta)
-    {
-        if (ItemDisplaySlot.Visible)
-        {
-            ItemDisplaySlot.SetGlobalPosition(GetGlobalMousePosition() + new Vector2(5, 5));
-        }
-    }
-}
-
-public partial class MultiContainerManager : Control
-{
-    private Tuple<InventoryData, SlotData> currentHeldItem;
-    private Tuple<InventoryData, SlotData> CurrentHeldItem
-    {
-        get { return currentHeldItem; }
-        set
-        {
-            currentHeldItem = value;
-            EmitSignal(SignalName.CurrentHeldItemChanged, value.Item2);
-        }
-    }
-    private ItemSlotPanel ItemDisplaySlot;
-    [Signal]
-    private delegate void CurrentHeldItemChangedEventHandler(SlotData slotData);
-
-    public MultiContainerManager(ItemSlotPanel displaySlot)
-    {
-        ItemDisplaySlot = displaySlot;
-
-        CurrentHeldItemChanged += OnCurrentHeldItemChanged;
-    }
-
-    public void AddContainerPanel(WorldObjectContainerPanel container)
-    {
-        container.SlotClicked += (inv, si, bi) =>
-        {
-            OnSlotClicked(inv, si, bi);
-        };
-    }
-
-    void OnSlotClicked(InventoryData inventoryData, int slotIndex, int buttonIndex)
-    {
-        if (CurrentHeldItem == null)
-        {
-            CurrentHeldItem = new Tuple<InventoryData, SlotData>(inventoryData, inventoryData.RemoveItemAtIndex(slotIndex));
-        } else
-        {
-            CurrentHeldItem = new Tuple<InventoryData, SlotData>(inventoryData, inventoryData.DropItemAtIndex(CurrentHeldItem.Item2, slotIndex));
-        }
-    }
-
-    void OnCurrentHeldItemChanged(SlotData slotData)
-    {
-        if (slotData != null)
-        {
-            ItemDisplaySlot.SetSlotData(slotData);
-            ItemDisplaySlot.Show();
-        } else
-        {
-            ItemDisplaySlot.Hide();
-        }
     }
 
     public override void _PhysicsProcess(double delta)

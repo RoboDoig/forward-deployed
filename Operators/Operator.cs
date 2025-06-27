@@ -55,9 +55,10 @@ public partial class Operator<TSource, TResult> : OperatorResource
             true, GetResultType().GetHashCode(), new Color(1, 1, 1)
         );
 
-        var sub = DataSubject.Subscribe(x =>
+        var sub = DataSubject.SubscribeOnCurrentSynchronizationContext().Subscribe(x =>
         {
-            graphNodeOperator.DisplayLabel.Text = x.ToString();
+            // TODO - we need to use call deferred for the subscription in some cases as we may not be able to call things on the graph operator from the observable thread.
+            CallDeferred(nameof(GraphNodeOperation), graphNodeOperator, x.ToString());
         });
 
         // The subscription must be disposed when the graph node exits the tree, otherwise we'll get errors from the observable chain.
@@ -67,5 +68,10 @@ public partial class Operator<TSource, TResult> : OperatorResource
         };
 
         return graphNodeOperator;
+    }
+
+    public void GraphNodeOperation(GraphNodeOperator graphNodeOperator, string result)
+    {
+        graphNodeOperator.DisplayLabel.Text = result;
     }
 }
