@@ -33,6 +33,9 @@ public partial class PlayerController : CharacterBody3D
     [Signal]
     public delegate void NoWorldObjectHoveredEventHandler(WorldObject worldObject);
 
+    [Signal]
+    public delegate void InventoryOpenRequestEventHandler();
+
     // Walk
     const float gravity = -9.8f * 3;
 
@@ -48,6 +51,17 @@ public partial class PlayerController : CharacterBody3D
 
     public override void _Input(InputEvent @event)
     {
+        LockableControls(@event);
+        PermanentControls(@event);
+    }
+
+    void LockableControls(InputEvent @event)
+    {
+        if (LockControls)
+        {
+            return;
+        }
+
         if (@event is InputEventMouseMotion motion)
         {
             cameraChange = motion.Relative;
@@ -63,6 +77,14 @@ public partial class PlayerController : CharacterBody3D
                     EmitSignal(SignalName.WorldObjectClicked, hoveredObject);
                 }
             }
+        }
+    }
+
+    void PermanentControls(InputEvent @event)
+    {
+        if (Input.IsActionJustPressed("inventory"))
+        {
+            EmitSignal(SignalName.InventoryOpenRequest);
         }
     }
 
@@ -100,11 +122,13 @@ public partial class PlayerController : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (!LockControls)
+        if (LockControls)
         {
-            Aim();
-            Velocity = Walk(delta) + Gravity(delta);
+            return;
         }
+
+        Aim();
+        Velocity = Walk(delta) + Gravity(delta);
 
         MoveAndSlide();
     }

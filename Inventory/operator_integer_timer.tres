@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=5 format=3 uid="uid://bhibdv6q7e8lj"]
+
+[ext_resource type="Script" uid="uid://c1u3t6hcphan3" path="res://Operators/OperatorIntegerTimer.cs" id="1_1225k"]
+[ext_resource type="Texture2D" uid="uid://c3x77v4d3btey" path="res://icon.svg" id="1_tf3e4"]
+[ext_resource type="Script" uid="uid://cc8tkfpy8uf3" path="res://Inventory/ItemData.cs" id="1_ubdi3"]
+
+[sub_resource type="Resource" id="Resource_tf3e4"]
+script = ExtResource("1_1225k")
+metadata/_custom_type_script = "uid://c1u3t6hcphan3"
+
+[resource]
+script = ExtResource("1_ubdi3")
+Operator = SubResource("Resource_tf3e4")
+Icon = ExtResource("1_tf3e4")
+metadata/_custom_type_script = "uid://cc8tkfpy8uf3"

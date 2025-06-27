@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public partial class WorldObjectOperatorMachine : WorldObject
 {
-    public override PackedScene InterfacePanel => ResourceLoader.Load<PackedScene>("res://world_object_operator_machine_panel.tscn");
+    public override PackedScene InterfacePanel => ResourceLoader.Load<PackedScene>("res://UserInterface/world_object_operator_machine_panel.tscn");
 
     public OperatorGraph OperatorGraph;
 
@@ -39,15 +39,20 @@ public partial class WorldObjectOperatorMachine : WorldObject
 
         outputOperator.DataSubject.Subscribe(x =>
         {
-            if (x)
-            {
-                SignalLight.LightColor = new Color(0, 1, 0);
-            }
-            else
-            {
-                SignalLight.LightColor = new Color(1, 0, 0);
-            }
+            CallDeferred(nameof(SignalLightFunction), x);
         });
+    }
+
+    private void SignalLightFunction(bool state)
+    {
+        if (state)
+        {
+            SignalLight.LightColor = new Color(0, 1, 0);
+        }
+        else
+        {
+            SignalLight.LightColor = new Color(1, 0, 0);
+        }
     }
 
     public override WorldObjectPanel CreateInterfacePanel(UiManager uiManager)
@@ -60,7 +65,7 @@ public partial class WorldObjectOperatorMachine : WorldObject
         return panel;
     }
 
-    public class OperatorBooleanSignal : ObservableOperator<bool, bool>
+    public partial class OperatorBooleanSignal : Operator<bool, bool>
     {
         public override string GetOperatorName()
         {

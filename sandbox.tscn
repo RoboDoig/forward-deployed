@@ -1,4 +1,4 @@
-[gd_scene load_steps=216 format=4 uid="uid://b7ehtybjhij05"]
+[gd_scene load_steps=231 format=4 uid="uid://b7ehtybjhij05"]
 
 [ext_resource type="Texture2D" uid="uid://b5s18hea4uk45" path="res://Scenes/black-mesa_GENERIC028.png" id="1_j4lsa"]
 [ext_resource type="Texture2D" uid="uid://c5kr3rdsy3jie" path="res://Scenes/black-mesa_BABTECH_CEIL01.png" id="2_nixu4"]
@@ -103,10 +103,17 @@
 [ext_resource type="Texture2D" uid="uid://6e5qfimpmnao" path="res://Scenes/black-mesa_C1A1SIGN3.png" id="101_kkhi2"]
 [ext_resource type="Script" uid="uid://b40xokxy3vjco" path="res://PlayerController.cs" id="102_nixu4"]
 [ext_resource type="Script" uid="uid://bgm60iim550qg" path="res://GeneralManager.cs" id="102_wydpg"]
+[ext_resource type="Script" uid="uid://dx2u4aor6gsyn" path="res://ManagerWorldObject.cs" id="103_m51rv"]
 [ext_resource type="Script" uid="uid://ci7kg0s6q8ewg" path="res://WorldObjects/WorldObject.cs" id="103_xxssg"]
 [ext_resource type="Texture2D" uid="uid://dr1v0pef3mudr" path="res://crosshair.png" id="104_wc0lh"]
 [ext_resource type="Script" uid="uid://u06kj2sgmoln" path="res://UiManager.cs" id="105_dofba"]
 [ext_resource type="Script" uid="uid://csmns5hcy2yq8" path="res://WorldObjects/WorldObjectOperatorMachine.cs" id="105_i7jma"]
+[ext_resource type="Script" uid="uid://c28egfa04aq0x" path="res://WorldObjects/WorldObjectContainer.cs" id="106_i7jma"]
+[ext_resource type="Resource" uid="uid://bhibdv6q7e8lj" path="res://Inventory/operator_integer_timer.tres" id="107_kx2f2"]
+[ext_resource type="Script" uid="uid://b22a2siuxoped" path="res://Inventory/SlotData.cs" id="109_5e06j"]
+[ext_resource type="Resource" uid="uid://nayopjtdepjg" path="res://Inventory/operator_is_even.tres" id="109_yvwri"]
+[ext_resource type="Script" uid="uid://c7afsmuxj680a" path="res://Inventory/InventoryData.cs" id="111_2gqr2"]
+[ext_resource type="PackedScene" uid="uid://b2n1y8sxwf1fp" path="res://UserInterface/item_slot.tscn" id="113_kx2f2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lij5"]
 resource_name = "GENERIC028"
@@ -2967,6 +2974,23 @@ data = PackedVector3Array(-10.6301, 1.0287, 3.4669, -10.6301, -0.343, 3.5432, -1
 background_mode = 1
 background_color = Color(1, 1, 1, 1)
 
+[sub_resource type="Resource" id="Resource_kx2f2"]
+script = ExtResource("109_5e06j")
+ItemData = ExtResource("107_kx2f2")
+Quantity = 1
+metadata/_custom_type_script = "uid://b22a2siuxoped"
+
+[sub_resource type="Resource" id="Resource_5e06j"]
+script = ExtResource("109_5e06j")
+ItemData = ExtResource("109_yvwri")
+Quantity = 1
+metadata/_custom_type_script = "uid://b22a2siuxoped"
+
+[sub_resource type="Resource" id="Resource_entrt"]
+script = ExtResource("111_2gqr2")
+SlotDatas = Array[Object]([SubResource("Resource_kx2f2"), SubResource("Resource_5e06j"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+metadata/_custom_type_script = "uid://c7afsmuxj680a"
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j4lsa"]
 radius = 0.293202
 height = 1.51999
@@ -2976,6 +3000,32 @@ size = Vector3(0.398155, 0.361104, 0.384743)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dofba"]
 size = Vector3(2.21679, 2.70439, 0.742121)
+
+[sub_resource type="Resource" id="Resource_m51rv"]
+script = ExtResource("109_5e06j")
+ItemData = ExtResource("107_kx2f2")
+Quantity = 1
+metadata/_custom_type_script = "uid://b22a2siuxoped"
+
+[sub_resource type="Resource" id="Resource_quljp"]
+script = ExtResource("109_5e06j")
+ItemData = ExtResource("107_kx2f2")
+Quantity = 1
+metadata/_custom_type_script = "uid://b22a2siuxoped"
+
+[sub_resource type="Resource" id="Resource_2gqr2"]
+script = ExtResource("109_5e06j")
+ItemData = ExtResource("109_yvwri")
+Quantity = 1
+metadata/_custom_type_script = "uid://b22a2siuxoped"
+
+[sub_resource type="Resource" id="Resource_ec4k0"]
+script = ExtResource("111_2gqr2")
+SlotDatas = Array[Object]([SubResource("Resource_m51rv"), SubResource("Resource_quljp"), null, SubResource("Resource_2gqr2"), null, null, null, null, null, null])
+metadata/_custom_type_script = "uid://c7afsmuxj680a"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i7jma"]
+size = Vector3(2.03467, 2.565, 0.961182)
 
 [node name="Sandbox" type="Node3D"]
 
@@ -2995,8 +3045,17 @@ debug_fill = false
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_j4lsa")
 
-[node name="Managers" type="Node3D" parent="."]
+[node name="Managers" type="Node3D" parent="." node_paths=PackedStringArray("UiManager", "PlayerController", "ManagerWorldObject")]
 script = ExtResource("102_wydpg")
+UiManager = NodePath("CanvasLayer")
+PlayerController = NodePath("Player")
+ManagerWorldObject = NodePath("ManagerWorldObject")
+
+[node name="ManagerWorldObject" type="StaticBody3D" parent="Managers"]
+script = ExtResource("103_m51rv")
+InventoryData = SubResource("Resource_entrt")
+ObjectName = "Inventory"
+Description = "Dummy world object for the game manager. Intended to contain things like the player inventory"
 
 [node name="Player" type="CharacterBody3D" parent="Managers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5784, -3.68815, -5.30589)
@@ -3039,9 +3098,23 @@ shape = SubResource("BoxShape3D_dofba")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22, 0.545, 0.525)
 light_color = Color(0.973524, 8.66354e-07, 0.553472, 1)
 
+[node name="Container" type="Node3D" parent="Managers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2584, -2.72969, -3.94682)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Managers/Container"]
+script = ExtResource("106_i7jma")
+InventoryData = SubResource("Resource_ec4k0")
+ObjectName = "Operator Box"
+Description = "It contains operators."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Managers/Container/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.106689, -0.536285, -0.012085)
+shape = SubResource("BoxShape3D_i7jma")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="Managers" node_paths=PackedStringArray("Crosshair")]
 script = ExtResource("105_dofba")
 Crosshair = NodePath("TextureRect")
+ItemSlot = ExtResource("113_kx2f2")
 
 [node name="TextureRect" type="TextureRect" parent="Managers/CanvasLayer"]
 anchors_preset = 8

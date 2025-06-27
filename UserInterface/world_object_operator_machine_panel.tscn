@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dxn5stpw6ikl7"]
 
-[ext_resource type="Script" uid="uid://d0nspvmiupb5" path="res://WorldObjectOperatorMachinePanel.cs" id="1_04ubh"]
+[ext_resource type="Script" uid="uid://bxx7i8vop61bs" path="res://UserInterface/WorldObjectOperatorMachinePanel.cs" id="1_04ubh"]
 [ext_resource type="LabelSettings" uid="uid://d0ee7jd8sa4mt" path="res://label_settings.tres" id="2_e4gjw"]
 [ext_resource type="FontFile" uid="uid://ci2y318j7yn78" path="res://Tektur-Regular.ttf" id="3_x6tvv"]
 
@@ -36,6 +36,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_wydpg")
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
@@ -57,6 +58,7 @@ theme_override_constants/separation = 20
 [node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
+mouse_filter = 1
 text = "World Object"
 label_settings = ExtResource("2_e4gjw")
 horizontal_alignment = 1
@@ -83,6 +85,7 @@ text = "NOT"
 [node name="GraphEdit" type="GraphEdit" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
 right_disconnects = true
 
 [node name="CloseButton" type="Button" parent="Panel/MarginContainer"]

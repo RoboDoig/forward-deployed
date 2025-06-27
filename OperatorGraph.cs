@@ -44,7 +44,7 @@ public class OperatorGraph
         };
     }
 
-    public GraphNodeMetadata AddOperator(Operator op)
+    public GraphNodeMetadata AddOperator(OperatorResource op)
     {
         var node = new GraphNodeMetadata { Operator = op };
         Graph.AddVertex(new GraphNodeMetadata { Operator = op });
@@ -57,7 +57,7 @@ public class OperatorGraph
         return node;
     }
 
-    public void RemoveOperator(Operator op)
+    public void RemoveOperator(OperatorResource op)
     {
         Graph.RemoveVertex(Graph.Vertices.Where(x => x.Operator == op).First());
     }
@@ -83,7 +83,7 @@ public class OperatorGraph
 
     public class GraphNodeMetadata
     {
-        public Operator Operator;
+        public OperatorResource Operator;
         public Vector2 LayoutOffset;
         public bool Permanent;
     }

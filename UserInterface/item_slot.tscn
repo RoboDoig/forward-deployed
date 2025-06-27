@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2n1y8sxwf1fp"]
+
+[ext_resource type="Script" uid="uid://dvdoa2dxvgcxf" path="res://UserInterface/ItemSlotPanel.cs" id="1_gnhaq"]
+[ext_resource type="FontFile" uid="uid://ci2y318j7yn78" path="res://Tektur-Regular.ttf" id="2_i83bl"]
+
+[node name="ItemSlot" type="PanelContainer" node_paths=PackedStringArray("ItemNameLabel", "ItemIcon")]
+custom_minimum_size = Vector2(64, 64)
+offset_right = 64.0
+offset_bottom = 64.0
+script = ExtResource("1_gnhaq")
+ItemNameLabel = NodePath("Label")
+ItemIcon = NodePath("TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("2_i83bl")
+horizontal_alignment = 2
+vertical_alignment = 1
+clip_text = true

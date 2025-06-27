@@ -6,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class OperatorIntegerTimer : ObservableOperator<Unit, int>
+[GlobalClass]
+public partial class OperatorIntegerTimer : Operator<Unit, int>
 {
     public override string GetOperatorName()
     {

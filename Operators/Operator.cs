@@ -6,12 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public abstract class Operator
-{
-    public abstract GraphNodeOperator CreateGraphNode();
-}
-
-public class ObservableOperator<TSource, TResult> : Operator
+// TODO - Note that once this is constructed by Godot the operator will start. We may want more logic for actully starting the data observable when we decide.
+public partial class Operator<TSource, TResult> : OperatorResource
 {
     public Subject<TSource> InputSubject { get; protected set; }
     public ConnectableObservable<TResult> DataSubject { get; protected set; }
@@ -23,7 +19,7 @@ public class ObservableOperator<TSource, TResult> : Operator
         DataSubject.Connect();
     }
 
-    public virtual string GetOperatorName()
+    public override string GetOperatorName()
     {
         return "Operator";
     }
@@ -59,9 +55,10 @@ public class ObservableOperator<TSource, TResult> : Operator
             true, GetResultType().GetHashCode(), new Color(1, 1, 1)
         );
 
-        var sub = DataSubject.Subscribe(x =>
+        var sub = DataSubject.SubscribeOnCurrentSynchronizationContext().Subscribe(x =>
         {
-            graphNodeOperator.DisplayLabel.Text = x.ToString();
+            // TODO - we need to use call deferred for the subscription in some cases as we may not be able to call things on the graph operator from the observable thread.
+            CallDeferred(nameof(GraphNodeOperation), graphNodeOperator, x.ToString());
         });
 
         // The subscription must be disposed when the graph node exits the tree, otherwise we'll get errors from the observable chain.
@@ -71,5 +68,10 @@ public class ObservableOperator<TSource, TResult> : Operator
         };
 
         return graphNodeOperator;
+    }
+
+    public void GraphNodeOperation(GraphNodeOperator graphNodeOperator, string result)
+    {
+        graphNodeOperator.DisplayLabel.Text = result;
     }
 }

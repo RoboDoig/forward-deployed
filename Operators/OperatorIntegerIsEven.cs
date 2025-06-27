@@ -1,3 +1,4 @@
+using Godot;
 using R3;
 using System;
 using System.Collections.Generic;
@@ -5,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class OperatorIntegerIsEven : ObservableOperator<int, bool>
+[GlobalClass]
+public partial class OperatorIntegerIsEven : Operator<int, bool>
 {
     public override string GetOperatorName()
     {
