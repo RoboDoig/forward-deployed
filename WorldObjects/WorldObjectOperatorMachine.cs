@@ -39,15 +39,20 @@ public partial class WorldObjectOperatorMachine : WorldObject
 
         outputOperator.DataSubject.Subscribe(x =>
         {
-            if (x)
-            {
-                SignalLight.LightColor = new Color(0, 1, 0);
-            }
-            else
-            {
-                SignalLight.LightColor = new Color(1, 0, 0);
-            }
+            CallDeferred(nameof(SignalLightFunction), x);
         });
+    }
+
+    private void SignalLightFunction(bool state)
+    {
+        if (state)
+        {
+            SignalLight.LightColor = new Color(0, 1, 0);
+        }
+        else
+        {
+            SignalLight.LightColor = new Color(1, 0, 0);
+        }
     }
 
     public override WorldObjectPanel CreateInterfacePanel(UiManager uiManager)
