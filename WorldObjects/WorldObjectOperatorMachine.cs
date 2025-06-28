@@ -17,6 +17,7 @@ public partial class WorldObjectOperatorMachine : WorldObject
     {
         OperatorGraph = new OperatorGraph();
 
+        // TODO - the output operator should not be removable!!
         var outputOperator = new OperatorBooleanSignal();
         var outputNode = new OperatorGraph.GraphNodeMetadata
         {
@@ -26,7 +27,7 @@ public partial class WorldObjectOperatorMachine : WorldObject
         };
         OperatorGraph.AddOperator(outputNode);
 
-        var notOperator = new OperatorNot();
+        var notOperator = ResourceLoader.Load<OperatorNot>("res://Inventory/operator_not.tres");
         var notNode = new OperatorGraph.GraphNodeMetadata
         {
             Operator = notOperator,

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OperatorNot" load_steps=3 format=3 uid="uid://b1i7p1jxi1gwa"]
+
+[ext_resource type="Script" uid="uid://bdam6o14k270i" path="res://Operators/OperatorNot.cs" id="1_sgsn1"]
+[ext_resource type="Texture2D" uid="uid://c3x77v4d3btey" path="res://icon.svg" id="1_xsk8w"]
+
+[resource]
+script = ExtResource("1_sgsn1")
+Icon = ExtResource("1_xsk8w")
+metadata/_custom_type_script = "uid://bdam6o14k270i"
