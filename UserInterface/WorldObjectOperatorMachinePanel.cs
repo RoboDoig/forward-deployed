@@ -136,10 +136,11 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         };
         operatorGraph.Graph.VertexAdded += vertexAddedAction;
 
-        operatorGraph.Graph.VertexRemoved += (v) =>
+        VertexAction<GraphNodeMetadata> vertexRemovedAction = (v) =>
         {
             OperatorMapping[v].QueueFree();
         };
+        operatorGraph.Graph.VertexRemoved += vertexRemovedAction;
 
         EdgeAction<GraphNodeMetadata, Edge<GraphNodeMetadata>> edgeAddedAction = (e) =>
         {
@@ -164,6 +165,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
             operatorGraph.Graph.EdgeAdded -= edgeAddedAction;
             operatorGraph.Graph.EdgeRemoved -= edgeRemovedAction;
             operatorGraph.Graph.VertexAdded -= vertexAddedAction;
+            operatorGraph.Graph.VertexRemoved -= vertexRemovedAction;
         };
     }
 
