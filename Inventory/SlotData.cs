@@ -5,7 +5,7 @@ using System;
 public partial class SlotData : Resource
 {
     [Export]
-    public ItemData ItemData;
+    public OperatorResource OperatorResource;
     [Export]
     public int Quantity;
 }

@@ -12,7 +12,7 @@ public partial class Operator<TSource, TResult> : OperatorResource
     public Subject<TSource> InputSubject { get; protected set; }
     public ConnectableObservable<TResult> DataSubject { get; protected set; }
 
-    public ObservableOperator()
+    public Operator()
     {
         InputSubject = CreateInputSubject();
         DataSubject = CreateDataObservable().Publish();

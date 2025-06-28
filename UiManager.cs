@@ -144,6 +144,11 @@ public partial class MultiItemInteractionManager : Control
                 CurrentHeldItem = null;
             }
         };
+
+        machine.GraphNodeRemoved += (op) =>
+        {
+            CurrentHeldItem = new SlotData { OperatorResource = op, Quantity = 1 };
+        };
     }
 
     public override void _PhysicsProcess(double delta)

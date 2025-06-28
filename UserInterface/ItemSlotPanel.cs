@@ -16,8 +16,8 @@ public partial class ItemSlotPanel : PanelContainer
         {
             //ItemNameLabel.Text = slotData.ItemData.Operator.GetOperatorName();
             ItemNameLabel.Text = "OP";
-            TooltipText = slotData.ItemData.Operator.GetOperatorName();
-            ItemIcon.Texture = slotData.ItemData.Icon;
+            TooltipText = slotData.OperatorResource.GetOperatorName();
+            ItemIcon.Texture = slotData.OperatorResource.Icon;
         }        
     }
 

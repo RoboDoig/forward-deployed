@@ -20,6 +20,8 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
 
     [Signal]
     public delegate void GridClickedEventHandler(int buttonIndex);
+    [Signal]
+    public delegate void GraphNodeRemovedEventHandler(OperatorResource op);
 
     private Dictionary<GraphNodeMetadata, GraphNodeOperator> OperatorMapping;
     private OperatorGraph OperatorGraph;
@@ -54,7 +56,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
     public void AddOperator(SlotData slotData)
     {
         // TODO - account for amounts in slotdata
-        OperatorGraph.AddOperator(slotData.ItemData.Operator);
+        OperatorGraph.AddOperator(slotData.OperatorResource);
     }
 
     public void CreateGraphEditNode(GraphNodeMetadata graphNodeMetadata)
@@ -62,7 +64,8 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         var graphNode = graphNodeMetadata.Operator.CreateGraphNode();
         Action graphNodeClosedAction = () =>
         {
-            OperatorGraph.RemoveOperator(graphNodeMetadata.Operator);
+            var removedGraphNode = OperatorGraph.RemoveOperator(graphNodeMetadata.Operator);
+            EmitSignal(SignalName.GraphNodeRemoved, removedGraphNode.Operator);
         };
         graphNode.CloseButton.Pressed += graphNodeClosedAction;
         graphNode.TreeExited += () => graphNode.CloseButton.Pressed -= graphNodeClosedAction;
