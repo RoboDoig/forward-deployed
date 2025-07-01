@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://r2xli5d6owof" path="res://GraphNodeOperator.cs" id="2_4r1s2"]
 [ext_resource type="FontFile" uid="uid://ci2y318j7yn78" path="res://Tektur-Regular.ttf" id="3_4r1s2"]
 
-[node name="GraphNode" type="GraphNode" node_paths=PackedStringArray("DisplayLabel", "CloseButton")]
+[node name="GraphNode" type="GraphNode" node_paths=PackedStringArray("CloseButton")]
 custom_minimum_size = Vector2(100, 100)
 offset_right = 100.0
 offset_bottom = 100.0
@@ -30,7 +30,6 @@ slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
 slot/1/draw_stylebox = true
 script = ExtResource("2_4r1s2")
-DisplayLabel = NodePath("DisplayLabel")
 CloseButton = NodePath("CloseButton")
 
 [node name="DisplayLabel" type="Label" parent="."]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ca7btbi1c0s76"]
 
 [ext_resource type="Theme" uid="uid://qforbqyyxkde" path="res://ui_theme.tres" id="1_u7fl0"]
-[ext_resource type="Script" uid="uid://r2xli5d6owof" path="res://GraphNodeOperator.cs" id="2_afof2"]
+[ext_resource type="Script" uid="uid://dns08n68353md" path="res://UserInterface/GraphNodeOperatorText.cs" id="2_u7fl0"]
 [ext_resource type="FontFile" uid="uid://ci2y318j7yn78" path="res://Tektur-Regular.ttf" id="3_hqswr"]
 
 [node name="GraphNode" type="GraphNode" node_paths=PackedStringArray("DisplayLabel", "CloseButton")]
@@ -29,7 +29,7 @@ slot/1/right_type = 0
 slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
 slot/1/draw_stylebox = true
-script = ExtResource("2_afof2")
+script = ExtResource("2_u7fl0")
 DisplayLabel = NodePath("DisplayLabel")
 CloseButton = NodePath("CloseButton")
 

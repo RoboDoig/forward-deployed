@@ -42,8 +42,8 @@ public partial class Operator<TSource, TResult> : OperatorResource
 
     public override GraphNodeOperator CreateGraphNode()
     {
-        PackedScene graphNodeScene = ResourceLoader.Load<PackedScene>("res://UserInterface/graph_node.tscn");
-        GraphNodeOperator graphNodeOperator = (GraphNodeOperator)graphNodeScene.Instantiate();
+        PackedScene graphNodeScene = ResourceLoader.Load<PackedScene>("res://UserInterface/graph_node_text.tscn");
+        GraphNodeOperatorText graphNodeOperator = (GraphNodeOperatorText)graphNodeScene.Instantiate();
 
         graphNodeOperator.Title = GetOperatorName();
 
@@ -67,7 +67,7 @@ public partial class Operator<TSource, TResult> : OperatorResource
         return graphNodeOperator;
     }
 
-    private void GraphNodeOperation(GraphNodeOperator graphNodeOperator, string result)
+    private void GraphNodeOperation(GraphNodeOperatorText graphNodeOperator, string result)
     {
         graphNodeOperator.DisplayLabel.Text = result;
     }
