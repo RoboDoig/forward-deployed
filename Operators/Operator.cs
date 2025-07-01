@@ -1,10 +1,6 @@
 using Godot;
 using R3;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 // TODO - Note that once this is constructed by Godot the operator will start. We may want more logic for actully starting the data observable when we decide.
 public partial class Operator<TSource, TResult> : OperatorResource
@@ -24,7 +20,8 @@ public partial class Operator<TSource, TResult> : OperatorResource
         return "Operator";
     }
 
-    protected virtual Subject<TSource> CreateInputSubject() {
+    protected virtual Subject<TSource> CreateInputSubject()
+    {
         return new Subject<TSource>();
     }
 
@@ -45,8 +42,8 @@ public partial class Operator<TSource, TResult> : OperatorResource
 
     public override GraphNodeOperator CreateGraphNode()
     {
-        PackedScene graphNodeScene = ResourceLoader.Load<PackedScene>("res://graph_node.tscn");
-        GraphNodeOperator graphNodeOperator = (GraphNodeOperator)graphNodeScene.Instantiate();
+        PackedScene graphNodeScene = ResourceLoader.Load<PackedScene>("res://UserInterface/graph_node_text.tscn");
+        GraphNodeOperatorText graphNodeOperator = (GraphNodeOperatorText)graphNodeScene.Instantiate();
 
         graphNodeOperator.Title = GetOperatorName();
 
@@ -70,7 +67,7 @@ public partial class Operator<TSource, TResult> : OperatorResource
         return graphNodeOperator;
     }
 
-    public void GraphNodeOperation(GraphNodeOperator graphNodeOperator, string result)
+    private void GraphNodeOperation(GraphNodeOperatorText graphNodeOperator, string result)
     {
         graphNodeOperator.DisplayLabel.Text = result;
     }
