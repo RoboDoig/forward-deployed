@@ -57,9 +57,12 @@ public class OperatorGraph
         return node;
     }
 
-    public void RemoveOperator(OperatorResource op)
+    public GraphNodeMetadata RemoveOperator(OperatorResource op)
     {
-        Graph.RemoveVertex(Graph.Vertices.Where(x => x.Operator == op).First());
+        GraphNodeMetadata vertexToRemove = Graph.Vertices.Where(x => x.Operator == op).First();
+        Graph.RemoveVertex(vertexToRemove);
+
+        return vertexToRemove;
     }
 
     public void ConnectOperators(GraphNodeMetadata from, GraphNodeMetadata to)
