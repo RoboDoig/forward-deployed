@@ -64,8 +64,11 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         var graphNode = graphNodeMetadata.Operator.CreateGraphNode();
         Action graphNodeClosedAction = () =>
         {
-            var removedGraphNode = OperatorGraph.RemoveOperator(graphNodeMetadata.Operator);
-            EmitSignal(SignalName.GraphNodeRemoved, removedGraphNode.Operator);
+            if (!graphNodeMetadata.Permanent)
+            {
+                var removedGraphNode = OperatorGraph.RemoveOperator(graphNodeMetadata.Operator);
+                EmitSignal(SignalName.GraphNodeRemoved, removedGraphNode.Operator);
+            }
         };
         graphNode.CloseButton.Pressed += graphNodeClosedAction;
         graphNode.TreeExited += () => graphNode.CloseButton.Pressed -= graphNodeClosedAction;
