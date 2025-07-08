@@ -1,4 +1,4 @@
-[gd_scene load_steps=231 format=4 uid="uid://b7ehtybjhij05"]
+[gd_scene load_steps=230 format=4 uid="uid://b7ehtybjhij05"]
 
 [ext_resource type="Texture2D" uid="uid://b5s18hea4uk45" path="res://Scenes/black-mesa_GENERIC028.png" id="1_j4lsa"]
 [ext_resource type="Texture2D" uid="uid://c5kr3rdsy3jie" path="res://Scenes/black-mesa_BABTECH_CEIL01.png" id="2_nixu4"]
@@ -105,7 +105,6 @@
 [ext_resource type="Script" uid="uid://bgm60iim550qg" path="res://GeneralManager.cs" id="102_wydpg"]
 [ext_resource type="Script" uid="uid://dx2u4aor6gsyn" path="res://ManagerWorldObject.cs" id="103_m51rv"]
 [ext_resource type="Script" uid="uid://ci7kg0s6q8ewg" path="res://WorldObjects/WorldObject.cs" id="103_xxssg"]
-[ext_resource type="Resource" uid="uid://mgrf5mm2pk6p" path="res://Inventory/operator_integer_is_even.tres" id="104_kx2f2"]
 [ext_resource type="Texture2D" uid="uid://dr1v0pef3mudr" path="res://crosshair.png" id="104_wc0lh"]
 [ext_resource type="Script" uid="uid://u06kj2sgmoln" path="res://UiManager.cs" id="105_dofba"]
 [ext_resource type="Script" uid="uid://csmns5hcy2yq8" path="res://WorldObjects/WorldObjectOperatorMachine.cs" id="105_i7jma"]
@@ -2976,7 +2975,7 @@ background_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Resource" id="Resource_kx2f2"]
 script = ExtResource("109_5e06j")
-OperatorResource = ExtResource("104_kx2f2")
+OperatorResource = ExtResource("107_kx2f2")
 Quantity = 1
 metadata/_custom_type_script = "uid://b22a2siuxoped"
 
@@ -3003,19 +3002,16 @@ size = Vector3(2.21679, 2.70439, 0.742121)
 
 [sub_resource type="Resource" id="Resource_quljp"]
 script = ExtResource("109_5e06j")
-OperatorResource = ExtResource("107_kx2f2")
 Quantity = 0
 metadata/_custom_type_script = "uid://b22a2siuxoped"
 
 [sub_resource type="Resource" id="Resource_2gqr2"]
 script = ExtResource("109_5e06j")
-OperatorResource = ExtResource("107_kx2f2")
 Quantity = 0
 metadata/_custom_type_script = "uid://b22a2siuxoped"
 
 [sub_resource type="Resource" id="Resource_m4t0x"]
 script = ExtResource("109_5e06j")
-OperatorResource = ExtResource("104_kx2f2")
 Quantity = 0
 metadata/_custom_type_script = "uid://b22a2siuxoped"
 
