@@ -20,6 +20,42 @@ public partial class OperatorBinaryCombinator<TSource1, TSource2, TResult> : Ope
         DataSubject.Connect();
     }
 
+    public override GraphNodeOperator CreateGraphNode()
+    {
+        PackedScene graphNodeScene = ResourceLoader.Load<PackedScene>("res://UserInterface/graph_node_text.tscn");
+        GraphNodeOperatorText graphNodeOperator = (GraphNodeOperatorText)graphNodeScene.Instantiate();
+
+        graphNodeOperator.Title = GetOperatorName();
+
+        graphNodeOperator.SetSlot(
+            0, true, typeof(TSource1).GetHashCode(), new Color(1, 1, 1),
+            true, typeof(TResult).GetHashCode(), new Color(1, 1, 1)
+        );
+        graphNodeOperator.SetSlot(
+            1, true, typeof(TSource2).GetHashCode(), new Color(1, 1, 1),
+            false, typeof(TResult).GetHashCode(), new Color(1, 1, 1)
+        );
+
+        var sub = DataSubject.SubscribeOnCurrentSynchronizationContext().Subscribe(x =>
+        {
+            // TODO - we need to use call deferred for the subscription in some cases as we may not be able to call things on the graph operator from the observable thread.
+            CallDeferred(nameof(GraphNodeOperation), graphNodeOperator, x.ToString());
+        });
+
+        // The subscription must be disposed when the graph node exits the tree, otherwise we'll get errors from the observable chain.
+        graphNodeOperator.TreeExited += () =>
+        {
+            sub.Dispose();
+        };
+
+        return graphNodeOperator;
+    }
+
+    private void GraphNodeOperation(GraphNodeOperatorText graphNodeOperator, string result)
+    {
+        graphNodeOperator.DisplayLabel.Text = result;
+    }
+
     protected virtual Observable<TResult> CreateDataObservable()
     {
         return Observable.Never<TResult>();

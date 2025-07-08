@@ -30,15 +30,15 @@ public partial class Operator<TSource, TResult> : OperatorResource
         return Observable.Never<TResult>();
     }
 
-    public Type GetSourceType()
-    {
-        return typeof(TSource);
-    }
+    //public Type GetSourceType()
+    //{
+    //    return typeof(TSource);
+    //}
 
-    public Type GetResultType()
-    {
-        return typeof(TResult);
-    }
+    //public Type GetResultType()
+    //{
+    //    return typeof(TResult);
+    //}
 
     public override GraphNodeOperator CreateGraphNode()
     {
@@ -48,8 +48,8 @@ public partial class Operator<TSource, TResult> : OperatorResource
         graphNodeOperator.Title = GetOperatorName();
 
         graphNodeOperator.SetSlot(
-            0, true, GetSourceType().GetHashCode(), new Color(1, 1, 1),
-            true, GetResultType().GetHashCode(), new Color(1, 1, 1)
+            0, true, typeof(TSource).GetHashCode(), new Color(1, 1, 1),
+            true, typeof(TResult).GetHashCode(), new Color(1, 1, 1)
         );
 
         var sub = DataSubject.SubscribeOnCurrentSynchronizationContext().Subscribe(x =>

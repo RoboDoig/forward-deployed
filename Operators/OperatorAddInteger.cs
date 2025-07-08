@@ -11,7 +11,7 @@ public partial class OperatorAddInteger : OperatorBinaryCombinator<int, int, int
 {
     public override string GetOperatorName()
     {
-        return "OperatorIntegerTimer";
+        return "OperatorAddInteger";
     }
 
     protected override Observable<int> CreateDataObservable()
