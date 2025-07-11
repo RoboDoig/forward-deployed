@@ -20,6 +20,18 @@ public partial class OperatorBinaryCombinator<TSource1, TSource2, TResult> : Ope
         DataSubject.Connect();
     }
 
+    public override IDisposable GetInputAtSlotIndex(int idx)
+    {
+        switch (idx)
+        {
+            case 0:
+                return InputSubject1;
+            case 1:
+                return InputSubject2;
+            default: return null;
+        }
+    }
+
     public override GraphNodeOperator CreateGraphNode()
     {
         PackedScene graphNodeScene = ResourceLoader.Load<PackedScene>("res://UserInterface/graph_node_text.tscn");

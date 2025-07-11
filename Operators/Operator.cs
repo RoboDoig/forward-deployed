@@ -3,6 +3,7 @@ using R3;
 using System;
 
 // TODO - Note that once this is constructed by Godot the operator will start. We may want more logic for actully starting the data observable when we decide.
+// TODO - Operator is a bad name? This is better described as a Transform.
 public partial class Operator<TSource, TResult> : OperatorResource
 {
     public Subject<TSource> InputSubject { get; protected set; }
@@ -20,6 +21,16 @@ public partial class Operator<TSource, TResult> : OperatorResource
         return "Operator";
     }
 
+    public override IDisposable GetInputAtSlotIndex(int idx)
+    {
+        switch (idx)
+        {
+            case 0:
+                return InputSubject;
+            default: return null;
+        }
+    }
+
     protected virtual Subject<TSource> CreateInputSubject()
     {
         return new Subject<TSource>();
@@ -30,15 +41,15 @@ public partial class Operator<TSource, TResult> : OperatorResource
         return Observable.Never<TResult>();
     }
 
-    //public Type GetSourceType()
-    //{
-    //    return typeof(TSource);
-    //}
+    public Type[] GetSourceType()
+    {
+        return [typeof(TSource)];
+    }
 
-    //public Type GetResultType()
-    //{
-    //    return typeof(TResult);
-    //}
+    public Type[] GetResultType()
+    {
+        return [typeof(TResult)];
+    }
 
     public override GraphNodeOperator CreateGraphNode()
     {
