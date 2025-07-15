@@ -102,7 +102,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
             var fromOperator = OperatorMapping.Where(kvp => kvp.Value == from).First().Key;
             var to = (GraphNodeOperator)GraphEdit.GetNode(toNode.ToString());
             var toOperator = OperatorMapping.Where(kvp => kvp.Value == to).First().Key;
-            operatorGraph.ConnectOperators(fromOperator, toOperator);
+            operatorGraph.ConnectOperators(fromOperator, toOperator, (int)toIndex);
         };
         GraphEdit.ConnectionRequest += connectionRequestHandler;
 

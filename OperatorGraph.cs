@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 public class OperatorGraph
 {
-    public AdjacencyGraph<GraphNodeMetadata, Edge<GraphNodeMetadata>> Graph { get; private set; }
-    private Dictionary<Edge<GraphNodeMetadata>, IDisposable> ObservableEdges; // Map of graph edges to disposable connections between operators
+    public AdjacencyGraph<Tuple<GraphNodeMetadata, int>, Edge<Tuple<GraphNodeMetadata, int>>> Graph { get; private set; }
+    private Dictionary<Edge<Tuple<GraphNodeMetadata, int>>, IDisposable> ObservableEdges; // Map of graph edges to disposable connections between operators
 
     public OperatorGraph()
     {
-        Graph = new AdjacencyGraph<GraphNodeMetadata, Edge<GraphNodeMetadata>>();
-        ObservableEdges = new Dictionary<Edge<GraphNodeMetadata>, IDisposable>();
+        Graph = new AdjacencyGraph<Tuple<GraphNodeMetadata, int>, Edge<Tuple<GraphNodeMetadata, int>>>();
+        ObservableEdges = new Dictionary<Edge<Tuple<GraphNodeMetadata, int>>, IDisposable>();
 
         Graph.EdgeAdded += (e) =>
         {
@@ -65,7 +65,7 @@ public class OperatorGraph
         return vertexToRemove;
     }
 
-    public void ConnectOperators(GraphNodeMetadata from, GraphNodeMetadata to)
+    public void ConnectOperators(GraphNodeMetadata from, GraphNodeMetadata to, int slotIndex)
     {
         Graph.AddEdge(new Edge<GraphNodeMetadata>(from, to));
     }
