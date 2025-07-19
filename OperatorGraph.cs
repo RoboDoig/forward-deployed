@@ -5,18 +5,19 @@ using R3;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 public class OperatorGraph
 {
-    public AdjacencyGraph<Tuple<GraphNodeMetadata, int>, Edge<Tuple<GraphNodeMetadata, int>>> Graph { get; private set; }
-    private Dictionary<Edge<Tuple<GraphNodeMetadata, int>>, IDisposable> ObservableEdges; // Map of graph edges to disposable connections between operators
+    public AdjacencyGraph<GraphNodeMetadata, STaggedEdge<GraphNodeMetadata, Vector2I>> Graph { get; private set; }
+    private Dictionary<STaggedEdge<GraphNodeMetadata, Vector2I>, IDisposable> ObservableEdges; // Map of graph edges to disposable connections between operators
 
     public OperatorGraph()
     {
-        Graph = new AdjacencyGraph<Tuple<GraphNodeMetadata, int>, Edge<Tuple<GraphNodeMetadata, int>>>();
-        ObservableEdges = new Dictionary<Edge<Tuple<GraphNodeMetadata, int>>, IDisposable>();
+        Graph = new AdjacencyGraph<GraphNodeMetadata, STaggedEdge<GraphNodeMetadata, Vector2I>>();
+        ObservableEdges = new Dictionary<STaggedEdge<GraphNodeMetadata, Vector2I>, IDisposable>();
 
         Graph.EdgeAdded += (e) =>
         {
@@ -65,18 +66,26 @@ public class OperatorGraph
         return vertexToRemove;
     }
 
-    public void ConnectOperators(GraphNodeMetadata from, GraphNodeMetadata to, int slotIndex)
+    public void ConnectOperators(GraphNodeMetadata from, int fromSlotIndex, GraphNodeMetadata to, int toSlotIndex)
     {
-        Graph.AddEdge(new Edge<GraphNodeMetadata>(from, to));
+        Graph.AddEdge(new STaggedEdge<GraphNodeMetadata, Vector2I>(from, to, new Vector2I(fromSlotIndex, toSlotIndex)));
     }
 
-    public void DisconnectOperators(GraphNodeMetadata from, GraphNodeMetadata to)
+    public void DisconnectOperators(GraphNodeMetadata from, int fromSlotIndex, GraphNodeMetadata to, int toSlotIndex)
     {
-        Edge<GraphNodeMetadata> edgeToRemove;
-        bool edgeExists = Graph.TryGetEdge(from, to, out edgeToRemove);
+        IEnumerable<STaggedEdge<GraphNodeMetadata, Vector2I>> validEdges = new List<STaggedEdge<GraphNodeMetadata, Vector2I>>();
+        Vector2I edgeComparer = new Vector2I(fromSlotIndex, toSlotIndex);
+        bool edgesExist = Graph.TryGetEdges(from, to, out validEdges);
 
-        if (edgeExists)
-            Graph.RemoveEdge(edgeToRemove);
+
+        if (edgesExist)
+        {
+            var edgeToRemove = validEdges.Where(x => x.Tag == edgeComparer).FirstOrDefault();
+            if (edgeToRemove != null)
+            {
+                Graph.RemoveEdge(edgeToRemove);
+            }
+        }
     }
 
     public static IDisposable ConnectSubjects<T>(ConnectableObservable<T> from, Subject<T> to)
