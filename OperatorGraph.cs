@@ -5,7 +5,6 @@ using R3;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -80,10 +79,10 @@ public class OperatorGraph
 
         if (edgesExist)
         {
-            var edgeToRemove = validEdges.Where(x => x.Tag == edgeComparer).FirstOrDefault();
+            var edgeToRemove = validEdges.Where(x => x.Tag == edgeComparer).ToList();
             if (edgeToRemove != null)
             {
-                Graph.RemoveEdge(edgeToRemove);
+                Graph.RemoveEdge(edgeToRemove[0]); // TODO - hard coded 0, should be a better way
             }
         }
     }
