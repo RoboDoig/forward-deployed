@@ -23,10 +23,11 @@ public class OperatorGraph
             // Create the disposable connection and add to observable edges
             var fromOperator = e.Source.Operator;
             var fromDataSubject = e.Source.Operator.GetType().GetProperty("DataSubject");
-            var toInputSubject = e.Target.Operator.GetType().GetProperty("InputSubject");
+            //var toInputSubject = e.Target.Operator.GetType().GetProperty("InputSubject");
+            var toInputSubject = e.Target.Operator.GetType().GetMethod("GetInputAtSlotIndex").Invoke(e.Target.Operator, [e.Tag.Y]);
 
             var connectMethod = GetType().GetMethod("ConnectSubjects").MakeGenericMethod(fromDataSubject.PropertyType.GetGenericArguments());
-            var connect = connectMethod.Invoke(null, [fromDataSubject.GetValue(e.Source.Operator), toInputSubject.GetValue(e.Target.Operator)]) as IDisposable;
+            var connect = connectMethod.Invoke(null, [fromDataSubject.GetValue(e.Source.Operator), toInputSubject]) as IDisposable;
 
             ObservableEdges.Add(e, connect);
         };
@@ -75,7 +76,6 @@ public class OperatorGraph
         IEnumerable<STaggedEdge<GraphNodeMetadata, Vector2I>> validEdges = new List<STaggedEdge<GraphNodeMetadata, Vector2I>>();
         Vector2I edgeComparer = new Vector2I(fromSlotIndex, toSlotIndex);
         bool edgesExist = Graph.TryGetEdges(from, to, out validEdges);
-
 
         if (edgesExist)
         {
