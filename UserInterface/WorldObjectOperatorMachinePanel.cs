@@ -92,7 +92,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         foreach (var edge in operatorGraph.Graph.Edges)
         {
             // TODO - hard coded indices
-            GraphEdit.ConnectNode(OperatorMapping[edge.Source].Name, 0, OperatorMapping[edge.Target].Name, 0);
+            GraphEdit.ConnectNode(OperatorMapping[edge.Source].Name, edge.Tag.X, OperatorMapping[edge.Target].Name, edge.Tag.Y);
         }
 
         // Connect graph edit signals, TODO - repeated code for looking up dict in reverse
