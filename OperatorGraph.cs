@@ -23,7 +23,6 @@ public class OperatorGraph
             // Create the disposable connection and add to observable edges
             var fromOperator = e.Source.Operator;
             var fromDataSubject = e.Source.Operator.GetType().GetProperty("DataSubject");
-            //var toInputSubject = e.Target.Operator.GetType().GetProperty("InputSubject");
             var toInputSubject = e.Target.Operator.GetType().GetMethod("GetInputAtSlotIndex").Invoke(e.Target.Operator, [e.Tag.Y]);
 
             var connectMethod = GetType().GetMethod("ConnectSubjects").MakeGenericMethod(fromDataSubject.PropertyType.GetGenericArguments());
@@ -97,5 +96,16 @@ public class OperatorGraph
         public OperatorResource Operator;
         public Vector2 LayoutOffset;
         public bool Permanent;
+    }
+
+    public class OperatorEdgeTag : IEquatable<OperatorEdgeTag>
+    {
+        public int FromIndex;
+        public int ToIndex;
+
+        public bool Equals(OperatorEdgeTag other)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
