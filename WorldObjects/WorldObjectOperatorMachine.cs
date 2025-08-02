@@ -45,7 +45,7 @@ public partial class WorldObjectOperatorMachine : WorldObject
         };
         OperatorGraph.AddOperator(notNode);
 
-        OperatorGraph.ConnectOperators(notNode, outputNode, 0);
+        OperatorGraph.ConnectOperators(notNode, 0, outputNode, 0);
 
         outputOperator.DataSubject.Subscribe(x =>
         {
