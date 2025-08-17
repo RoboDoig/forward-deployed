@@ -22,8 +22,8 @@ public partial class OperatorNot : Operator<bool, bool>
         graphNodeOperator.Title = GetOperatorName();
 
         graphNodeOperator.SetSlot(
-            0, true, GetSourceType().GetHashCode(), new Color(1, 1, 1),
-            true, GetResultType().GetHashCode(), new Color(1, 1, 1)
+            0, true, typeof(bool).GetHashCode(), new Color(1, 1, 1),
+            true, typeof(bool).GetHashCode(), new Color(1, 1, 1)
         );
 
         var sub = DataSubject.SubscribeOnCurrentSynchronizationContext().Subscribe(x =>

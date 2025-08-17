@@ -10,23 +10,23 @@ using System.Threading.Tasks;
 
 public class OperatorGraph
 {
-    public AdjacencyGraph<GraphNodeMetadata, Edge<GraphNodeMetadata>> Graph { get; private set; }
-    private Dictionary<Edge<GraphNodeMetadata>, IDisposable> ObservableEdges; // Map of graph edges to disposable connections between operators
+    public AdjacencyGraph<GraphNodeMetadata, STaggedEdge<GraphNodeMetadata, Vector2I>> Graph { get; private set; }
+    private Dictionary<STaggedEdge<GraphNodeMetadata, Vector2I>, IDisposable> ObservableEdges; // Map of graph edges to disposable connections between operators
 
     public OperatorGraph()
     {
-        Graph = new AdjacencyGraph<GraphNodeMetadata, Edge<GraphNodeMetadata>>();
-        ObservableEdges = new Dictionary<Edge<GraphNodeMetadata>, IDisposable>();
+        Graph = new AdjacencyGraph<GraphNodeMetadata, STaggedEdge<GraphNodeMetadata, Vector2I>>();
+        ObservableEdges = new Dictionary<STaggedEdge<GraphNodeMetadata, Vector2I>, IDisposable>();
 
         Graph.EdgeAdded += (e) =>
         {
             // Create the disposable connection and add to observable edges
             var fromOperator = e.Source.Operator;
             var fromDataSubject = e.Source.Operator.GetType().GetProperty("DataSubject");
-            var toInputSubject = e.Target.Operator.GetType().GetProperty("InputSubject");
+            var toInputSubject = e.Target.Operator.GetType().GetMethod("GetInputAtSlotIndex").Invoke(e.Target.Operator, [e.Tag.Y]);
 
             var connectMethod = GetType().GetMethod("ConnectSubjects").MakeGenericMethod(fromDataSubject.PropertyType.GetGenericArguments());
-            var connect = connectMethod.Invoke(null, [fromDataSubject.GetValue(e.Source.Operator), toInputSubject.GetValue(e.Target.Operator)]) as IDisposable;
+            var connect = connectMethod.Invoke(null, [fromDataSubject.GetValue(e.Source.Operator), toInputSubject]) as IDisposable;
 
             ObservableEdges.Add(e, connect);
         };
@@ -65,18 +65,25 @@ public class OperatorGraph
         return vertexToRemove;
     }
 
-    public void ConnectOperators(GraphNodeMetadata from, GraphNodeMetadata to)
+    public void ConnectOperators(GraphNodeMetadata from, int fromSlotIndex, GraphNodeMetadata to, int toSlotIndex)
     {
-        Graph.AddEdge(new Edge<GraphNodeMetadata>(from, to));
+        Graph.AddEdge(new STaggedEdge<GraphNodeMetadata, Vector2I>(from, to, new Vector2I(fromSlotIndex, toSlotIndex)));
     }
 
-    public void DisconnectOperators(GraphNodeMetadata from, GraphNodeMetadata to)
+    public void DisconnectOperators(GraphNodeMetadata from, int fromSlotIndex, GraphNodeMetadata to, int toSlotIndex)
     {
-        Edge<GraphNodeMetadata> edgeToRemove;
-        bool edgeExists = Graph.TryGetEdge(from, to, out edgeToRemove);
+        IEnumerable<STaggedEdge<GraphNodeMetadata, Vector2I>> validEdges = new List<STaggedEdge<GraphNodeMetadata, Vector2I>>();
+        Vector2I edgeComparer = new Vector2I(fromSlotIndex, toSlotIndex);
+        bool edgesExist = Graph.TryGetEdges(from, to, out validEdges);
 
-        if (edgeExists)
-            Graph.RemoveEdge(edgeToRemove);
+        if (edgesExist)
+        {
+            var edgeToRemove = validEdges.Where(x => x.Tag == edgeComparer).ToList();
+            if (edgeToRemove != null)
+            {
+                Graph.RemoveEdge(edgeToRemove[0]); // TODO - hard coded 0, should be a better way
+            }
+        }
     }
 
     public static IDisposable ConnectSubjects<T>(ConnectableObservable<T> from, Subject<T> to)

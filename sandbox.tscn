@@ -1,4 +1,4 @@
-[gd_scene load_steps=231 format=4 uid="uid://b7ehtybjhij05"]
+[gd_scene load_steps=237 format=4 uid="uid://b7ehtybjhij05"]
 
 [ext_resource type="Texture2D" uid="uid://b5s18hea4uk45" path="res://Scenes/black-mesa_GENERIC028.png" id="1_j4lsa"]
 [ext_resource type="Texture2D" uid="uid://c5kr3rdsy3jie" path="res://Scenes/black-mesa_BABTECH_CEIL01.png" id="2_nixu4"]
@@ -105,7 +105,6 @@
 [ext_resource type="Script" uid="uid://bgm60iim550qg" path="res://GeneralManager.cs" id="102_wydpg"]
 [ext_resource type="Script" uid="uid://dx2u4aor6gsyn" path="res://ManagerWorldObject.cs" id="103_m51rv"]
 [ext_resource type="Script" uid="uid://ci7kg0s6q8ewg" path="res://WorldObjects/WorldObject.cs" id="103_xxssg"]
-[ext_resource type="Resource" uid="uid://mgrf5mm2pk6p" path="res://Inventory/operator_integer_is_even.tres" id="104_kx2f2"]
 [ext_resource type="Texture2D" uid="uid://dr1v0pef3mudr" path="res://crosshair.png" id="104_wc0lh"]
 [ext_resource type="Script" uid="uid://u06kj2sgmoln" path="res://UiManager.cs" id="105_dofba"]
 [ext_resource type="Script" uid="uid://csmns5hcy2yq8" path="res://WorldObjects/WorldObjectOperatorMachine.cs" id="105_i7jma"]
@@ -113,7 +112,11 @@
 [ext_resource type="Resource" uid="uid://cgntg16rrbpy7" path="res://Inventory/operator_integer_timer.tres" id="107_kx2f2"]
 [ext_resource type="Script" uid="uid://b22a2siuxoped" path="res://Inventory/SlotData.cs" id="109_5e06j"]
 [ext_resource type="Script" uid="uid://c7afsmuxj680a" path="res://Inventory/InventoryData.cs" id="111_2gqr2"]
+[ext_resource type="Texture2D" uid="uid://c3x77v4d3btey" path="res://icon.svg" id="111_entrt"]
+[ext_resource type="Script" uid="uid://76vkvdpxdeub" path="res://Operators/OperatorAddInteger.cs" id="112_m4t0x"]
 [ext_resource type="PackedScene" uid="uid://b2n1y8sxwf1fp" path="res://UserInterface/item_slot.tscn" id="113_kx2f2"]
+[ext_resource type="Script" uid="uid://by8hw658s4203" path="res://Operators/OperatorIntegerIsEven.cs" id="113_ow8a6"]
+[ext_resource type="Script" uid="uid://c1u3t6hcphan3" path="res://Operators/OperatorIntegerTimer.cs" id="114_lsbdk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lij5"]
 resource_name = "GENERIC028"
@@ -2976,7 +2979,7 @@ background_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Resource" id="Resource_kx2f2"]
 script = ExtResource("109_5e06j")
-OperatorResource = ExtResource("104_kx2f2")
+OperatorResource = ExtResource("107_kx2f2")
 Quantity = 1
 metadata/_custom_type_script = "uid://b22a2siuxoped"
 
@@ -3001,27 +3004,42 @@ size = Vector3(0.398155, 0.361104, 0.384743)
 [sub_resource type="BoxShape3D" id="BoxShape3D_dofba"]
 size = Vector3(2.21679, 2.70439, 0.742121)
 
+[sub_resource type="Resource" id="Resource_q3xdp"]
+script = ExtResource("112_m4t0x")
+Icon = ExtResource("111_entrt")
+metadata/_custom_type_script = "uid://76vkvdpxdeub"
+
 [sub_resource type="Resource" id="Resource_quljp"]
 script = ExtResource("109_5e06j")
-OperatorResource = ExtResource("107_kx2f2")
+OperatorResource = SubResource("Resource_q3xdp")
 Quantity = 0
 metadata/_custom_type_script = "uid://b22a2siuxoped"
 
-[sub_resource type="Resource" id="Resource_2gqr2"]
+[sub_resource type="Resource" id="Resource_2qnlt"]
+script = ExtResource("113_ow8a6")
+Icon = ExtResource("111_entrt")
+metadata/_custom_type_script = "uid://by8hw658s4203"
+
+[sub_resource type="Resource" id="Resource_2waon"]
 script = ExtResource("109_5e06j")
-OperatorResource = ExtResource("107_kx2f2")
+OperatorResource = SubResource("Resource_2qnlt")
 Quantity = 0
 metadata/_custom_type_script = "uid://b22a2siuxoped"
 
-[sub_resource type="Resource" id="Resource_m4t0x"]
+[sub_resource type="Resource" id="Resource_6nud5"]
+script = ExtResource("114_lsbdk")
+Icon = ExtResource("111_entrt")
+metadata/_custom_type_script = "uid://c1u3t6hcphan3"
+
+[sub_resource type="Resource" id="Resource_ji2l8"]
 script = ExtResource("109_5e06j")
-OperatorResource = ExtResource("104_kx2f2")
+OperatorResource = SubResource("Resource_6nud5")
 Quantity = 0
 metadata/_custom_type_script = "uid://b22a2siuxoped"
 
 [sub_resource type="Resource" id="Resource_ec4k0"]
 script = ExtResource("111_2gqr2")
-SlotDatas = Array[Object]([SubResource("Resource_quljp"), SubResource("Resource_2gqr2"), SubResource("Resource_m4t0x"), null, null, null, null, null, null, null])
+SlotDatas = Array[Object]([SubResource("Resource_quljp"), SubResource("Resource_2waon"), SubResource("Resource_ji2l8"), null, null, null, null, null, null, null])
 metadata/_custom_type_script = "uid://c7afsmuxj680a"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i7jma"]

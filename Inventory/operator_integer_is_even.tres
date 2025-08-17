@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c3x77v4d3btey" path="res://icon.svg" id="1_xkkil"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_nyfrd")
 Icon = ExtResource("1_xkkil")
 metadata/_custom_type_script = "uid://by8hw658s4203"

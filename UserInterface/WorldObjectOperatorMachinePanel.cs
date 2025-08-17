@@ -92,7 +92,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         foreach (var edge in operatorGraph.Graph.Edges)
         {
             // TODO - hard coded indices
-            GraphEdit.ConnectNode(OperatorMapping[edge.Source].Name, 0, OperatorMapping[edge.Target].Name, 0);
+            GraphEdit.ConnectNode(OperatorMapping[edge.Source].Name, edge.Tag.X, OperatorMapping[edge.Target].Name, edge.Tag.Y);
         }
 
         // Connect graph edit signals, TODO - repeated code for looking up dict in reverse
@@ -102,7 +102,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
             var fromOperator = OperatorMapping.Where(kvp => kvp.Value == from).First().Key;
             var to = (GraphNodeOperator)GraphEdit.GetNode(toNode.ToString());
             var toOperator = OperatorMapping.Where(kvp => kvp.Value == to).First().Key;
-            operatorGraph.ConnectOperators(fromOperator, toOperator);
+            operatorGraph.ConnectOperators(fromOperator, (int)fromIndex, toOperator, (int)toIndex);
         };
         GraphEdit.ConnectionRequest += connectionRequestHandler;
 
@@ -112,7 +112,7 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
             var fromOperator = OperatorMapping.Where(kvp => kvp.Value == from).First().Key;
             var to = (GraphNodeOperator)GraphEdit.GetNode(toNode.ToString());
             var toOperator = OperatorMapping.Where(kvp => kvp.Value == to).First().Key;
-            operatorGraph.DisconnectOperators(fromOperator, toOperator);
+            operatorGraph.DisconnectOperators(fromOperator, (int)fromIndex, toOperator, (int)toIndex);
         };
         GraphEdit.DisconnectionRequest += disconnectionRequestHandler;
 
@@ -145,15 +145,15 @@ public partial class WorldObjectOperatorMachinePanel : WorldObjectPanel
         };
         operatorGraph.Graph.VertexRemoved += vertexRemovedAction;
 
-        EdgeAction<GraphNodeMetadata, Edge<GraphNodeMetadata>> edgeAddedAction = (e) =>
+        EdgeAction<GraphNodeMetadata, STaggedEdge<GraphNodeMetadata, Vector2I>> edgeAddedAction = (e) =>
         {
-            GraphEdit.ConnectNode(OperatorMapping[e.Source].Name, 0, OperatorMapping[e.Target].Name, 0);
+            GraphEdit.ConnectNode(OperatorMapping[e.Source].Name, e.Tag.X, OperatorMapping[e.Target].Name, e.Tag.Y);
         };
         operatorGraph.Graph.EdgeAdded += edgeAddedAction;
 
-        EdgeAction<GraphNodeMetadata, Edge<GraphNodeMetadata>> edgeRemovedAction = (e) =>
+        EdgeAction<GraphNodeMetadata, STaggedEdge<GraphNodeMetadata, Vector2I>> edgeRemovedAction = (e) =>
         {
-            GraphEdit.DisconnectNode(OperatorMapping[e.Source].Name, 0, OperatorMapping[e.Target].Name, 0);
+            GraphEdit.DisconnectNode(OperatorMapping[e.Source].Name, e.Tag.X, OperatorMapping[e.Target].Name, e.Tag.Y);
         };
         operatorGraph.Graph.EdgeRemoved += edgeRemovedAction;
 

@@ -9,6 +9,19 @@ using System.Threading.Tasks;
 [GlobalClass]
 public partial class OperatorIntegerTimer : Operator<Unit, int>
 {
+
+    private float TimerSeconds = 1;
+
+    public OperatorIntegerTimer()
+    {
+
+    }
+
+    public OperatorIntegerTimer(float timerSeconds)
+    {
+        TimerSeconds = timerSeconds;
+    }
+
     public override string GetOperatorName()
     {
         return "OperatorIntegerTimer";
@@ -16,6 +29,6 @@ public partial class OperatorIntegerTimer : Operator<Unit, int>
 
     protected override Observable<int> CreateDataObservable()
     {
-        return Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Index();
+        return Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(TimerSeconds)).Index();
     }
 }

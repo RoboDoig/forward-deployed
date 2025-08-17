@@ -27,6 +27,15 @@ public partial class WorldObjectOperatorMachine : WorldObject
         };
         OperatorGraph.AddOperator(outputNode);
 
+        var addOperator = ResourceLoader.Load<OperatorAddInteger>("res://Inventory/operator_add_integer.tres");
+        var addNode = new OperatorGraph.GraphNodeMetadata
+        {
+            Operator = addOperator,
+            LayoutOffset = new Vector2(300, 100),
+            Permanent = false
+        };
+        OperatorGraph.AddOperator(addNode);
+
         var notOperator = ResourceLoader.Load<OperatorNot>("res://Inventory/operator_not.tres");
         var notNode = new OperatorGraph.GraphNodeMetadata
         {
@@ -36,7 +45,7 @@ public partial class WorldObjectOperatorMachine : WorldObject
         };
         OperatorGraph.AddOperator(notNode);
 
-        OperatorGraph.ConnectOperators(notNode, outputNode);
+        OperatorGraph.ConnectOperators(notNode, 0, outputNode, 0);
 
         outputOperator.DataSubject.Subscribe(x =>
         {
