@@ -97,15 +97,4 @@ public class OperatorGraph
         public Vector2 LayoutOffset;
         public bool Permanent;
     }
-
-    public class OperatorEdgeTag : IEquatable<OperatorEdgeTag>
-    {
-        public int FromIndex;
-        public int ToIndex;
-
-        public bool Equals(OperatorEdgeTag other)
-        {
-            throw new NotImplementedException();
-        }
-    }
 }
